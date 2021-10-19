@@ -1,2 +1,3 @@
-import './generating-template-element.js';
+import {createCards} from './generating-template-element.js';
 
+createCards();

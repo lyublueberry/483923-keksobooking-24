@@ -6,7 +6,7 @@ import {getCheckout} from './get-functions-for-create-object.js';
 import {getNumberGenerateForImg} from './get-functions-for-create-object.js';
 import {getNumberGenerateForLat} from './get-functions-for-create-object.js';
 import {getNumberGenerateForLng} from './get-functions-for-create-object.js';
-import { getRandomInteger } from './get-random-integer.js';
+import {getRandomInteger} from './get-random-integer.js';
 
 const NUMBER_GENERATED_OBJECTS = 1;//временно выставила данное число, т.к. не умещаются все карточки
 
