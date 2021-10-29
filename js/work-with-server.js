@@ -2,7 +2,6 @@ function serverWork(onSuccess, onError) {
   return fetch('https://24.javascript.pages.academy/keksobooking/data', {
     method: 'GET',
     credentials: 'same-origin',
-    // body: new FormData(),
   },
   )
     .then((response) => {
@@ -12,7 +11,7 @@ function serverWork(onSuccess, onError) {
       throw new Error(`${response.status} ${response.statusText}`);
     })
     .then((data) => {
-      onSuccess('result', data);
+      onSuccess(data);
     })
     .catch((err) => {
       onError(err);

@@ -7,6 +7,8 @@ import {onChangeCapacityAndRoomNumber} from './working-with-forms.js';
 import {onChangeTypeHousingAndPriceNight} from './working-with-forms.js';
 import {onChangeTimeIn} from './working-with-forms.js';
 import {onChangeTimeOut} from './working-with-forms.js';
+import {serverWork} from './work-with-server.js';
+import {setMarkerSingleAndList} from './work-with-map.js';
 
 createCards();
 setInactiveState();
@@ -17,3 +19,5 @@ onChangeCapacityAndRoomNumber();
 onChangeTypeHousingAndPriceNight();
 onChangeTimeIn();
 onChangeTimeOut();
+serverWork(console.log, console.error);
+setMarkerSingleAndList();
