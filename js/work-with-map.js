@@ -8,6 +8,7 @@ import {getNumberGenerateForLng} from './create-object.js';
 
 import {createAdObjects} from './create-object.js';
 
+
 function setMarkerSingleAndList(){
   const inputAddress = document.querySelector('#address');
 
@@ -26,7 +27,7 @@ function setMarkerSingleAndList(){
 
   //добавим свою иконку красную одиночная
   const mainPinIcon = L.icon({
-    iconUrl: '/keksobooking/img/main-pin.svg',
+    iconUrl: './img/main-pin.svg',
     iconSize: [52, 52],
     iconAnchor: [26, 52],
   });
@@ -55,7 +56,7 @@ function setMarkerSingleAndList(){
   //здесь добавляем многочисленные синие
   createAdObjects.forEach((item) => {
     const icon = L.icon({
-      iconUrl: '/keksobooking/img/pin.svg',
+      iconUrl: './img/pin.svg',
       iconSize: [40, 40],
       iconAnchor: [20, 40],
     });

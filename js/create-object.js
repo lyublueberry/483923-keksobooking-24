@@ -8,7 +8,7 @@ import {getNumberGenerateForLat} from './get-functions-for-create-object.js';
 import {getNumberGenerateForLng} from './get-functions-for-create-object.js';
 import {getRandomInteger} from './get-random-integer.js';
 
-const NUMBER_GENERATED_OBJECTS = 5;//временно выставила данное число, т.к. не умещаются все карточки
+const NUMBER_GENERATED_OBJECTS = 10;//временно выставила данное число, т.к. не умещаются все карточки
 
 const author = {
   avatar: 'img/avatars/user', // + numberGenerateForImg() + '.png'
