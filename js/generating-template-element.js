@@ -35,6 +35,7 @@ function createPhotos(adElement, item) {
   const photoItemAd = adElement.querySelector('.popup__photo').cloneNode(true);
   const photoItemConteiner = adElement.querySelector('.popup__photos');
   photoItemConteiner.innerHTML = '';
+
   for (let i = 0; i < item.offer.photos.length; i++) {
     const photoItem = photoItemAd.cloneNode(true);
     photoItem.src = item.offer.photos[i];
