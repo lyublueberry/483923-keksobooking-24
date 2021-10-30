@@ -1,4 +1,3 @@
-const isMapLoaded = true;
 const formAd = document.querySelector('.ad-form');
 const featuresBtnBig = formAd.querySelector('.ad-form__element.ad-form__element--wide.features');
 
@@ -61,10 +60,8 @@ function setBlockingFeaturesBtns() {
 }
 
 function setActiveState() {
-  if (isMapLoaded) {
-    removeBlockingFilterForm();
-    removeBlockingFormAdd();
-  }
+  removeBlockingFilterForm();
+  removeBlockingFormAdd();
 }
 
 function removeBlockingFormAdd() {
@@ -101,6 +98,10 @@ function removeBlockingFeaturesBtns() {
   }
 }
 
-export {setInactiveState};
+export {
+  setInactiveState
+};
 
-export {setActiveState};
+export {
+  setActiveState
+};
