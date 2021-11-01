@@ -1,5 +1,3 @@
-import {createAdObjects} from './create-object.js';
-
 const offerTypes = {
   flat: 'Квартира',
   hotel: 'Отель',
@@ -8,16 +6,12 @@ const offerTypes = {
   palace: 'Дворец'};
 
 const similarTemplateAd = document.querySelector('#card').content.querySelector('.popup'); //здесь используется поиск по # т.к. нет класса
-const similarAdObjects = createAdObjects;
+//const similarAdObjects = createAdObjects;
 
-function createCards() {
-  similarAdObjects.forEach((item) => {
+const createCards = (item) => {
+  /* similarAdObjects.forEach((item) => {
     createCard(item);
-  });
-}
-
-function createCard(item) {
-  const adElement = similarTemplateAd.cloneNode(true);
+  }); */const adElement = similarTemplateAd.cloneNode(true);
   adElement.querySelector('.popup__title').textContent = item.offer.title;
   adElement.querySelector('.popup__text--address').textContent = item.offer.address;
   adElement.querySelector('.popup__text--price').textContent = `${item.offer.price} ₽/ночь`;
@@ -29,7 +23,11 @@ function createCard(item) {
   createFeatures(adElement, item);
   adElement.querySelector('.popup__avatar').src = item.author.avatar;
   return adElement;
-}
+};
+
+/* function createCard(item) {
+
+} */
 
 function createPhotos(adElement, item) {
   const photoItemAd = adElement.querySelector('.popup__photo').cloneNode(true);
@@ -57,4 +55,4 @@ function createFeatures(adElement, item) {
 }
 
 export {createCards};
-export {createCard};
+//export {createCard};
