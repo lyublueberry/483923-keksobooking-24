@@ -6,28 +6,22 @@ const offerTypes = {
   palace: 'Дворец'};
 
 const similarTemplateAd = document.querySelector('#card').content.querySelector('.popup'); //здесь используется поиск по # т.к. нет класса
-//const similarAdObjects = createAdObjects;
 
-const createCards = (item) => {
-  /* similarAdObjects.forEach((item) => {
-    createCard(item);
-  }); */const adElement = similarTemplateAd.cloneNode(true);
-  adElement.querySelector('.popup__title').textContent = item.offer.title;
-  adElement.querySelector('.popup__text--address').textContent = item.offer.address;
-  adElement.querySelector('.popup__text--price').textContent = `${item.offer.price} ₽/ночь`;
-  adElement.querySelector('.popup__type').textContent = offerTypes[item.offer.type];
-  adElement.querySelector('.popup__text--capacity').textContent = `${item.offer.rooms} комнаты для ${item.offer.guests} гостей`;
-  adElement.querySelector('.popup__text--time').textContent = `Заезд после ${item.offer.checkin}, выезд до ${item.offer.checkout}`;
-  createPhotos(adElement, item);
-  adElement.querySelector('.popup__description').textContent = item.offer.description;
-  createFeatures(adElement, item);
-  adElement.querySelector('.popup__avatar').src = item.author.avatar;
+
+const createCards = (card) => {
+  const adElement = similarTemplateAd.cloneNode(true);
+  adElement.querySelector('.popup__title').textContent = card.offer.title;
+  adElement.querySelector('.popup__text--address').textContent = card.offer.address;
+  adElement.querySelector('.popup__text--price').textContent = `${card.offer.price} ₽/ночь`;
+  adElement.querySelector('.popup__type').textContent = offerTypes[card.offer.type];
+  adElement.querySelector('.popup__text--capacity').textContent = `${card.offer.rooms} комнаты для ${card.offer.guests} гостей`;
+  adElement.querySelector('.popup__text--time').textContent = `Заезд после ${card.offer.checkin}, выезд до ${card.offer.checkout}`;
+  createPhotos(adElement, card);
+  adElement.querySelector('.popup__description').textContent = card.offer.description;
+  createFeatures(adElement, card);
+  adElement.querySelector('.popup__avatar').src = card.author.avatar;
   return adElement;
 };
-
-/* function createCard(item) {
-
-} */
 
 function createPhotos(adElement, item) {
   const photoItemAd = adElement.querySelector('.popup__photo').cloneNode(true);
@@ -55,4 +49,3 @@ function createFeatures(adElement, item) {
 }
 
 export {createCards};
-//export {createCard};

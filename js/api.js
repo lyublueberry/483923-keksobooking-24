@@ -2,16 +2,16 @@ const getData = (onSuccess, onFail) => {
   fetch('https://24.javascript.pages.academy/keksobooking/data')
     .then((response) => {
       if(response.ok){
-        return console.log(response.json());
+        return response.json();
       } else {
-        onFail();
+        throw new Error('Ошибка в получении данных с сервера');
       }
     })
-    .then((cards) => {
-      onSuccess(cards);
+    .then((data) => {
+      onSuccess(data);
     })
-    .catch(() => {
-      onFail(console.log('Ошибка в получении данных с сервера!'));
+    .catch((fail) => {
+      onFail(fail);
     });
 };
 

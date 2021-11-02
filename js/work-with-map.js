@@ -6,7 +6,33 @@ import {
   getData
 } from './api.js';
 
-import {setActiveState} from './state-active-inactive.js';
+/************************* */
+
+const showAlert = (message) => {
+  const alertContainer = document.createElement('div');
+  alertContainer.style.zIndex = 410;
+  alertContainer.style.position = 'absolute';
+  alertContainer.style.width = '1200px';
+  alertContainer.style.top = '10%';
+  alertContainer.style.bottom = 'auto';
+  alertContainer.style.padding = '10px 3px';
+  alertContainer.style.fontSize = '25px';
+  alertContainer.style.fontWeight = 'bold';
+  alertContainer.style.textAlign = 'center';
+  alertContainer.style.backgroundColor = 'rgba(235, 110, 110, 0.7)';
+  alertContainer.style.color = '#353535';
+
+  alertContainer.textContent = message;
+
+  document.body.append(alertContainer);
+
+  setTimeout(() => {
+    alertContainer.remove();
+  }, 5000);
+};
+
+
+/********************* */
 
 
 const MAIN_MARKER = {
@@ -56,26 +82,27 @@ L.tileLayer(TYLE_LAYER, {
 const multipleMarker = L.layerGroup().addTo(map);
 
 const createMultipleMarker = (cards) => {
-  cards.forEach((item) => {
+  cards.forEach((cardsItem) => {
     const icon = L.icon(MULTIPLE_MARKER);
     const marker = L.marker({
-      lat:item.offer.lat,
-      lng:item.offer.lng,
+      lat:cardsItem.location.lat,
+      lng:cardsItem.location.lng,
     },
     {
       icon,
     });
-    marker.addTo(multipleMarker).bindPopup(createCards(item));
+    marker.addTo(multipleMarker).bindPopup(createCards(cardsItem));
   });
 };
 
 const addCardsInMarker = () => {
-  setActiveState();
+  //setActiveState();
   inputAddress.value = `${MAIN_MARKER.lat}, ${MAIN_MARKER.lng}`;
   getData(
-    (item) => createMultipleMarker(item.slice(0, 10)),
-    () => console.log('Ошибка в получении данных с сервера!'),
+    (cards) => createMultipleMarker(cards.slice(0, 10)),
+    () => showAlert('Ошибка в получении данных с сервера!'),
   );
 };
+
 
 export {addCardsInMarker};
