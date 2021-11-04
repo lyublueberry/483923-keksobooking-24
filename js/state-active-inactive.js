@@ -98,10 +98,4 @@ function removeBlockingFeaturesBtns() {
   }
 }
 
-export {
-  setInactiveState
-};
-
-export {
-  setActiveState
-};
+export {setInactiveState, setActiveState};

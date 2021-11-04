@@ -1,39 +1,20 @@
 import {
   createCards
-} from './generating-template-element.js';
+} from './template-element.js';
 
 import {
   getData
 } from './api.js';
 
-/************************* */
-
 const showAlert = (message) => {
   const alertContainer = document.createElement('div');
-  alertContainer.style.zIndex = 410;
-  alertContainer.style.position = 'absolute';
-  alertContainer.style.width = '1200px';
-  alertContainer.style.top = '10%';
-  alertContainer.style.bottom = 'auto';
-  alertContainer.style.padding = '10px 3px';
-  alertContainer.style.fontSize = '25px';
-  alertContainer.style.fontWeight = 'bold';
-  alertContainer.style.textAlign = 'center';
-  alertContainer.style.backgroundColor = 'rgba(235, 110, 110, 0.7)';
-  alertContainer.style.color = '#353535';
-
+  alertContainer.classList.add('alert-error');
   alertContainer.textContent = message;
-
   document.body.append(alertContainer);
-
   setTimeout(() => {
     alertContainer.remove();
   }, 5000);
 };
-
-
-/********************* */
-
 
 const MAIN_MARKER = {
   lat: 35.6895,
@@ -104,5 +85,8 @@ const addCardsInMarker = () => {
   );
 };
 
+const refresh = () => {
+  map.setView(MAIN_MARKER);
+};
 
-export {addCardsInMarker};
+export {addCardsInMarker, refresh};
