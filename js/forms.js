@@ -2,7 +2,7 @@ import {
   sendData
 } from './api.js';
 
-import {refresh} from './map.js';
+import {refresh, MAIN_MARKER} from './map.js';
 
 const priceAdInput = document.querySelector('#price');
 const titleAdInput = document.querySelector('#title');
@@ -83,6 +83,10 @@ function onChangeTypeHousingAndPriceNight() {
 const clickResetForm = () => {
   btnResetForm.addEventListener('click', () => {
     refresh();
+    const inputAddress = document.querySelector('#address');
+    console.log(inputAddress);
+    inputAddress.value = `${MAIN_MARKER.lat}, ${MAIN_MARKER.lng}`;
+    console.log(inputAddress.value);
   });
 };
 

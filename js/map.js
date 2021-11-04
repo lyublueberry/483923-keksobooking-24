@@ -89,4 +89,4 @@ const refresh = () => {
   map.setView(MAIN_MARKER);
 };
 
-export {addCardsInMarker, refresh};
+export {addCardsInMarker, refresh, MAIN_MARKER};
