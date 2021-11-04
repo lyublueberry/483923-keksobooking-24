@@ -18,10 +18,11 @@ const showAlert = (message) => {
 
 const MAIN_MARKER = {
   lat: 35.6895,
-  lng: 139.692 };
+  lng: 139.692};
 
 const ATTRIBUTION = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
 const TYLE_LAYER = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+const ZOOM = 10;
 
 const inputAddress = document.querySelector('#address');
 
@@ -36,9 +37,9 @@ const MAIN_MARKER_ICON = {
 const MULTIPLE_MARKER = {
   iconUrl: './img/pin.svg',
   iconSize: [40, 40],
-  iconAnchor: [20, 40] };
+  iconAnchor: [20, 40]};
 
-const map = L.map('map-canvas').setView(MAIN_MARKER, 10);
+const map = L.map('map-canvas').setView(MAIN_MARKER, ZOOM);
 
 const mainPinIcon = L.icon(MAIN_MARKER_ICON);
 
@@ -52,7 +53,9 @@ mainPinMarker.addTo(map);
 
 //двигаем по карте и получаем координаты
 mainPinMarker.on('moveend', (evt) => {
-  const {lat, lng} = evt.target.getLatLng();
+  const {
+    lat,
+    lng} = evt.target.getLatLng();
   inputAddress.value = `${lat.toFixed(5)}, ${lng.toFixed(5)}`;
 });
 
@@ -66,10 +69,9 @@ const createMultipleMarker = (cards) => {
   cards.forEach((cardsItem) => {
     const icon = L.icon(MULTIPLE_MARKER);
     const marker = L.marker({
-      lat:cardsItem.location.lat,
-      lng:cardsItem.location.lng,
-    },
-    {
+      lat: cardsItem.location.lat,
+      lng: cardsItem.location.lng,
+    }, {
       icon,
     });
     marker.addTo(multipleMarker).bindPopup(createCards(cardsItem));
@@ -85,8 +87,12 @@ const addCardsInMarker = () => {
   );
 };
 
-const refresh = () => {
-  map.setView(MAIN_MARKER);
-};
+function backToCenter() {
+  map.panTo([MAIN_MARKER.lat, MAIN_MARKER.lng]);
+}
 
-export {addCardsInMarker, refresh, MAIN_MARKER};
+export {
+  addCardsInMarker,
+  backToCenter,
+  MAIN_MARKER
+};

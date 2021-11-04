@@ -2,7 +2,10 @@ import {
   sendData
 } from './api.js';
 
-import {refresh, MAIN_MARKER} from './map.js';
+import {
+  MAIN_MARKER,
+  backToCenter
+} from './map.js';
 
 const priceAdInput = document.querySelector('#price');
 const titleAdInput = document.querySelector('#title');
@@ -12,7 +15,7 @@ const selectTypeHousing = document.querySelector('#type');
 const selectTimeIn = document.querySelector('#timein');
 const selectTimeOut = document.querySelector('#timeout');
 const cardForm = document.querySelector('.ad-form');
-const btnResetForm = document.querySelector('.ad-form__reset');
+const inputAddress = document.querySelector('#address');
 
 const priceHousing = {
   bungalow: 0,
@@ -72,21 +75,12 @@ function onChangeTypeHousingAndPriceNight() {
 если на карте был показан балун, то он должен быть скрыт.*/
 
 //кнопка сброса
-
-/* const resetF = () => {
-  cardForm.addEventListener('submit', (evt) => {
-    evt.preventDefault();
-    evt.target.reset();
-  });
-}; */
-
 const clickResetForm = () => {
-  btnResetForm.addEventListener('click', () => {
-    refresh();
-    const inputAddress = document.querySelector('#address');
-    console.log(inputAddress);
-    inputAddress.value = `${MAIN_MARKER.lat}, ${MAIN_MARKER.lng}`;
-    console.log(inputAddress.value);
+  cardForm.addEventListener('reset', () => {
+    setTimeout(() => {
+      inputAddress.value = `${MAIN_MARKER.lat}, ${MAIN_MARKER.lng}`;
+      backToCenter();
+    }, 0);
   });
 };
 
@@ -143,12 +137,13 @@ const setUserFormSubmit = () => {
   });
 };
 
-selectTimeIn.onclick = function () {
+selectTimeIn.addEventListener('click', function () {
   selectTimeOut.value = this.value;
-};
-selectTimeOut.onclick = function () {
+});
+
+selectTimeOut.addEventListener('click', function () {
   selectTimeIn.value = this.value;
-};
+});
 
 
 export {
