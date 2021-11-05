@@ -80,16 +80,17 @@ const removeBlockingFormAdd = ()  =>{
   formAd.classList.remove('ad-form--disabled');
 };
 
-const setActiveState = () => {
-  removeBlockingFilterForm();
-  removeBlockingFormAdd();
-};
-const setInactiveState = () => {
-  setBlockingFormAdd();
-  setBlockingFilterForm();
+
+const stateActivOrInactive = (falseOrTrue) =>{
+  if(falseOrTrue){
+    removeBlockingFilterForm();
+    removeBlockingFormAdd();
+  } else{
+    setBlockingFormAdd();
+    setBlockingFilterForm();
+  }
 };
 
 export {
-  setInactiveState,
-  setActiveState
+  stateActivOrInactive
 };

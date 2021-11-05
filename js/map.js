@@ -6,15 +6,13 @@ import {
   getData
 } from './api.js';
 
-import { setActiveState } from './state-active-inactive.js';
+import { stateActivOrInactive } from './state-active-inactive.js';
 
 const ATTRIBUTION = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
 const TYLE_LAYER = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
 const ZOOM = 10;
 const SIZE_MAIN_MARKER = 52;
-//const ANCHOR_MAIN_MARKER = 26;
 const SIZE_MULTIPLE_MARKER = 40;
-//const ANCHOR_MULTIPLE_MARKER = 20;
 const LAT = 35.6895;
 const LNG = 139.692;
 const URL_MAIN_MARKER = './img/main-pin.svg';
@@ -38,7 +36,7 @@ const MainMarker = {
   lat: LAT,
   lng: LNG};
 
-const map = L.map('map-canvas').on('load', setActiveState).setView(MainMarker, ZOOM);
+const map = L.map('map-canvas').on('load', stateActivOrInactive).setView(MainMarker, ZOOM);
 
 const mainPinIcon = L.icon(MAIN_MARKER_ICON);
 

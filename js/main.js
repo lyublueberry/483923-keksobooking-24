@@ -1,8 +1,4 @@
 import {
-  setInactiveState,
-  setActiveState
-} from './state-active-inactive.js';
-import {
   checkFieldIsValidTitle,
   checkFieldIsValidPrice,
   onChangeCapacityAndRoomNumber,
@@ -21,13 +17,11 @@ import {
 } from './map.js';
 
 addCardsInMarker();
-setInactiveState();
 checkFieldIsValidTitle();
 checkFieldIsValidPrice();
 onChangeCapacityAndRoomNumber();
 onChangeTypeHousingAndPriceNight();
 setUserFormSubmit();
 clickResetForm();
-setActiveState();
 setAvatarPhoto();
 setHousingPhoto();
