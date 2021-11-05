@@ -38,4 +38,4 @@ const setHousingPhoto = () =>{
   });
 };
 
-export{setHousingPhoto, setAvatarPhoto};
+export{setHousingPhoto, setAvatarPhoto, previewAvatar, previewHousing};

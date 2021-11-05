@@ -4,7 +4,7 @@ import {
 
 import {
   MainMarker,
-  backToCenter
+  resetMap
 } from './map.js';
 
 const priceAdInput = document.querySelector('#price');
@@ -19,13 +19,12 @@ const inputAddress = document.querySelector('#address');
 const errorMessage = document.querySelector('#error').content;
 const errorSuccess = document.querySelector('#success').content;
 
-
 const PriceHousing = {
-  BUNGALOW: 0,
-  FLAT: 1000,
-  HOTEL: 3000,
-  HOUSE: 5000,
-  PALACE: 10000};
+  bungalow: 0,
+  flat: 1000,
+  hotel: 3000,
+  house: 5000,
+  palace: 10000};
 
 //валидация заголовка объявления
 const checkFieldIsValidTitle = () => {
@@ -70,19 +69,14 @@ const onChangeTypeHousingAndPriceNight = () => {
   });
 };
 
-/*При успешной отправке формы или её очистке (нажатие на кнопку .ad-form__reset) страница, не перезагружаясь, переходит в состояние, когда:
-все заполненные поля возвращаются в изначальное состояние;
-фильтрация (состояние фильтров и отфильтрованные метки) сбрасывается;
-метка адреса возвращается в исходное положение;
-значение поля адреса корректируется соответственно исходному положению метки;
-если на карте был показан балун, то он должен быть скрыт.*/
-
 //кнопка сброса
 const clickResetForm = () => {
+
   cardForm.addEventListener('reset', () => {
     setTimeout(() => {
       inputAddress.value = `${MainMarker.lat}, ${MainMarker.lng}`;
-      backToCenter();
+      resetMap();
+      document.querySelector('.map__filters').reset();
     }, 0);
   });
 };
@@ -107,14 +101,17 @@ const showErrorMessage = () => {
   btnError.addEventListener('click', errorMessageRemove);
 };
 
-
 const successMessageRemove = (evt) => {
   const successRemove = document.querySelector('.success');
   evt.preventDefault();
   if (evt.key === 'Escape') {
     successRemove.remove();
-  }
-  successRemove.remove();
+  } else {successRemove.remove();}
+  inputAddress.value = `${MainMarker.lat}, ${MainMarker.lng}`;
+  resetMap();
+  document.querySelector('.map__filters').reset();
+  cardForm.reset();
+
 };
 
 const showSuccessMessage = () => {
@@ -122,7 +119,7 @@ const showSuccessMessage = () => {
   document.body.appendChild(successModal);
   document.addEventListener('keydown', successMessageRemove);
   document.addEventListener('click', successMessageRemove);
-  clickResetForm();
+
 };
 
 //отправка формы
@@ -145,7 +142,6 @@ selectTimeIn.addEventListener('click', function () {
 selectTimeOut.addEventListener('click', function () {
   selectTimeIn.value = this.value;
 });
-
 
 export {
   checkFieldIsValidTitle,
