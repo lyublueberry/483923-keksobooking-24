@@ -28,7 +28,7 @@ const PriceHousing = {
   PALACE: 10000};
 
 //валидация заголовка объявления
-function checkFieldIsValidTitle() {
+const checkFieldIsValidTitle = () => {
   titleAdInput.addEventListener('invalid', () => {
     if (titleAdInput.validity.tooShort) {
       titleAdInput.setCustomValidity('Минимальная длина заголовка объявления 30 символов');
@@ -40,10 +40,10 @@ function checkFieldIsValidTitle() {
       titleAdInput.setCustomValidity('');
     }
   });
-}
+};
 
 //валидация цены
-function checkFieldIsValidPrice() {
+const checkFieldIsValidPrice = () => {
   priceAdInput.addEventListener('invalid', () => {
     if (priceAdInput.value >= 1000000) {
       priceAdInput.setCustomValidity('Максимальное значение — 1 000 000');
@@ -51,24 +51,24 @@ function checkFieldIsValidPrice() {
       priceAdInput.setCustomValidity('');
     }
   });
-}
+};
 
 //соотношение кол-во комнат/мест
-function onChangeCapacityAndRoomNumber() {
+const onChangeCapacityAndRoomNumber = () => {
   capacitySelect.addEventListener('change', function () {
     const valueOptionCapacity = this.value;
     valueOptionCapacity > selectRoomNumber.value ? capacitySelect.setCustomValidity('Данное значение неверно') : capacitySelect.setCustomValidity('');
   });
-}
+};
 
 //соотношение жилья/цена
-function onChangeTypeHousingAndPriceNight() {
+const onChangeTypeHousingAndPriceNight = () => {
   selectTypeHousing.addEventListener('change', function () {
     const valueTypeHousing = this.value;
     priceAdInput.placeholder = PriceHousing[valueTypeHousing];
     priceAdInput.min = PriceHousing[valueTypeHousing];
   });
-}
+};
 
 /*При успешной отправке формы или её очистке (нажатие на кнопку .ad-form__reset) страница, не перезагружаясь, переходит в состояние, когда:
 все заполненные поля возвращаются в изначальное состояние;
