@@ -1,9 +1,9 @@
-const offerTypes = {
-  flat: 'Квартира',
-  hotel: 'Отель',
-  bungalow: 'Бунгало',
-  house: 'Дом',
-  palace: 'Дворец'};
+const OfferTypes = {
+  FLAT: 'Квартира',
+  HOTEL: 'Отель',
+  BUNGALOW: 'Бунгало',
+  HOUSE: 'Дом',
+  PALACE: 'Дворец'};
 
 const similarTemplateAd = document.querySelector('#card').content.querySelector('.popup'); //здесь используется поиск по # т.к. нет класса
 
@@ -23,7 +23,7 @@ const createCards = (card) => {
   card.offer.title ? title.textContent = card.offer.title : title.classList.add('hidden');
   card.offer.address ? address.textContent = card.offer.address : address.classList.add('hidden');
   card.offer.price ? price.textContent = `${card.offer.price} ₽/ночь` : price.classList.add('hidden');
-  card.offer.type ? type.textContent = offerTypes[card.offer.type] : type.classList.add('hidden');
+  card.offer.type ? type.textContent = OfferTypes[card.offer.type] : type.classList.add('hidden');
   card.offer.description ? description.textContent = card.offer.description : description.classList.add('hidden');
   (card.offer.rooms && card.offer.guests) ? capacity.textContent = `${card.offer.rooms} комнаты для ${card.offer.guests} гостей`: capacity.classList.add('hidden');
   (card.offer.checkin && card.offer.checkout) ? time.textContent = `Заезд после ${card.offer.checkin}, выезд до ${card.offer.checkout}`: time.classList.add('hidden');
@@ -33,12 +33,11 @@ const createCards = (card) => {
     const photoItemAd = adElement.querySelector('.popup__photo').cloneNode(true);
     const photoItemConteiner = adElement.querySelector('.popup__photos');
     photoItemConteiner.innerHTML = '';
-
-    for (let i = 0; i < card.offer.photos.length; i++) {
+    card.offer.photos.forEach((item) => {
       const photoItem = photoItemAd.cloneNode(true);
-      photoItem.src = card.offer.photos[i];
+      photoItem.src = item;
       photoItemConteiner.appendChild(photoItem);
-    }
+    });
     adElement.appendChild(photoItemConteiner);
   } else {
     photos.classList.add('hidden');

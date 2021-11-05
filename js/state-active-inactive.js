@@ -1,6 +1,5 @@
 const formAd = document.querySelector('.ad-form');
 const featuresBtnBig = formAd.querySelector('.ad-form__element.ad-form__element--wide.features');
-
 const loadingInputAvatar = formAd.querySelector('.ad-form-header__input.visually-hidden');
 const btnPublish = formAd.querySelector('.ad-form__submit');
 const btnReset = formAd.querySelector('.ad-form__reset');
@@ -14,8 +13,13 @@ const selectRoomNumber = formAd.querySelector('#room_number');
 const selectCapacity = formAd.querySelector('#capacity');
 const txtDescription = formAd.querySelector('#description');
 const loadingInputImages = formAd.querySelector('#images');
+const featureBtnBigItems = featuresBtnBig.querySelectorAll('.features__checkbox.visually-hidden');
+const featuresBtn = document.querySelector('.map__features');
+const featureBtnItems = featuresBtn.querySelectorAll('.map__checkbox.visually-hidden');
+const formFilter = document.querySelector('.map__filters');
+const formItems = formFilter.querySelectorAll('.map__filter');
 
-const formAdItem = [
+const formAdItems = [
   loadingInputAvatar, btnPublish, btnReset, inputTitle, inputAddress, selectTypeHousing, inputPrice, selectTimein, selectTimeout,
   selectRoomNumber, selectCapacity, txtDescription, loadingInputImages];
 
@@ -25,38 +29,31 @@ function setInactiveState() {
 }
 
 function setBlockingFormAdd() {
-  for (let i = 0; i < formAdItem.length; i++) {
-    formAdItem[i].disabled = true;
-  }
+  formAdItems.forEach((formAdItem) => {
+    formAdItem.disabled = true;
+  });
   setBlockingFeaturesBtnsBigs();
   setBlockingFeaturesBtns();
-
   formAd.classList.add('ad-form--disabled');
 }
 
 function setBlockingFilterForm() {
-  const formFilter = document.querySelector('.map__filters');
-  const formItem = formFilter.querySelectorAll('.map__filter');
-  for (let i = 0; i < formItem.length; i++) {
-    formItem[i].disabled = true;
-  }
+  formItems.forEach((formItem) => {
+    formItem.disabled = true;
+  });
   formFilter.classList.add('ad-form--disabled');
-
 }
 
 function setBlockingFeaturesBtnsBigs() {
-  const featureBtnBigItem = featuresBtnBig.querySelectorAll('.features__checkbox.visually-hidden');
-  for (let i = 0; i < featureBtnBigItem.length; i++) {
-    featureBtnBigItem[i].disabled = true;
-  }
+  featureBtnBigItems.forEach((featureBtnBigItem) => {
+    featureBtnBigItem.disabled = true;
+  });
 }
 
 function setBlockingFeaturesBtns() {
-  const featuresBtn = document.querySelector('.map__features');
-  const featureBtnItem = featuresBtn.querySelectorAll('.map__checkbox.visually-hidden');
-  for (let i = 0; i < featureBtnItem.length; i++) {
-    featureBtnItem[i].disabled = true;
-  }
+  featureBtnItems.forEach((featureBtnItem) => {
+    featureBtnItem.disabled = true;
+  });
 }
 
 function setActiveState() {
@@ -65,37 +62,34 @@ function setActiveState() {
 }
 
 function removeBlockingFormAdd() {
-  for (let i = 0; i < formAdItem.length; i++) {
-    formAdItem[i].disabled = false;
-  }
+  formAdItems.forEach((formAdItem) => {
+    formAdItem.disabled = false;
+  });
   removeBlockingFeaturesBtnsBigs();
   removeBlockingFeaturesBtns();
   formAd.classList.remove('ad-form--disabled');
 }
 
-
 function removeBlockingFilterForm() {
-  const formFilter = document.querySelector('.map__filters');
-  const formItem = formFilter.querySelectorAll('.map__filter');
-  for (let i = 0; i < formItem.length; i++) {
-    formItem[i].disabled = false;
-  }
+  formItems.forEach((formItem) => {
+    formItem.disabled = false;
+  });
   formFilter.classList.remove('ad-form--disabled');
 }
 
 function removeBlockingFeaturesBtnsBigs() {
-  const featureBtnBigItem = featuresBtnBig.querySelectorAll('.features__checkbox.visually-hidden');
-  for (let i = 0; i < featureBtnBigItem.length; i++) {
-    featureBtnBigItem[i].disabled = false;
-  }
+  featureBtnBigItems.forEach((featureBtnBigItem) => {
+    featureBtnBigItem.disabled = false;
+  });
 }
 
 function removeBlockingFeaturesBtns() {
-  const featuresBtn = document.querySelector('.map__features');
-  const featureBtnItem = featuresBtn.querySelectorAll('.map__checkbox.visually-hidden');
-  for (let i = 0; i < featureBtnItem.length; i++) {
-    featureBtnItem[i].disabled = false;
-  }
+  featureBtnItems.forEach((featureBtnItem) => {
+    featureBtnItem.disabled = false;
+  });
 }
 
-export {setInactiveState, setActiveState};
+export {
+  setInactiveState,
+  setActiveState
+};

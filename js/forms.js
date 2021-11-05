@@ -3,7 +3,7 @@ import {
 } from './api.js';
 
 import {
-  MAIN_MARKER,
+  MainMarker,
   backToCenter
 } from './map.js';
 
@@ -16,13 +16,16 @@ const selectTimeIn = document.querySelector('#timein');
 const selectTimeOut = document.querySelector('#timeout');
 const cardForm = document.querySelector('.ad-form');
 const inputAddress = document.querySelector('#address');
+const errorMessage = document.querySelector('#error').content;
+const errorSuccess = document.querySelector('#success').content;
 
-const priceHousing = {
-  bungalow: 0,
-  flat: 1000,
-  hotel: 3000,
-  house: 5000,
-  palace: 10000};
+
+const PriceHousing = {
+  BUNGALOW: 0,
+  FLAT: 1000,
+  HOTEL: 3000,
+  HOUSE: 5000,
+  PALACE: 10000};
 
 //валидация заголовка объявления
 function checkFieldIsValidTitle() {
@@ -62,8 +65,8 @@ function onChangeCapacityAndRoomNumber() {
 function onChangeTypeHousingAndPriceNight() {
   selectTypeHousing.addEventListener('change', function () {
     const valueTypeHousing = this.value;
-    priceAdInput.placeholder = priceHousing[valueTypeHousing];
-    priceAdInput.min = priceHousing[valueTypeHousing];
+    priceAdInput.placeholder = PriceHousing[valueTypeHousing];
+    priceAdInput.min = PriceHousing[valueTypeHousing];
   });
 }
 
@@ -78,14 +81,13 @@ function onChangeTypeHousingAndPriceNight() {
 const clickResetForm = () => {
   cardForm.addEventListener('reset', () => {
     setTimeout(() => {
-      inputAddress.value = `${MAIN_MARKER.lat}, ${MAIN_MARKER.lng}`;
+      inputAddress.value = `${MainMarker.lat}, ${MainMarker.lng}`;
       backToCenter();
     }, 0);
   });
 };
 
 //сообщение об успехе/ошибке отправки
-const errorMessage = document.querySelector('#error').content;
 
 const errorMessageRemove = (evt) => {
   const successRemove = document.querySelector('.error');
@@ -105,7 +107,6 @@ const showErrorMessage = () => {
   btnError.addEventListener('click', errorMessageRemove);
 };
 
-const errorSuccess = document.querySelector('#success').content;
 
 const successMessageRemove = (evt) => {
   const successRemove = document.querySelector('.success');

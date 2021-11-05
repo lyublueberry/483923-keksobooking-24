@@ -6,25 +6,9 @@ import {
   getData
 } from './api.js';
 
-const showAlert = (message) => {
-  const alertContainer = document.createElement('div');
-  alertContainer.classList.add('alert-error');
-  alertContainer.textContent = message;
-  document.body.append(alertContainer);
-  setTimeout(() => {
-    alertContainer.remove();
-  }, 5000);
-};
-
-const MAIN_MARKER = {
-  lat: 35.6895,
-  lng: 139.692};
-
 const ATTRIBUTION = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
 const TYLE_LAYER = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
 const ZOOM = 10;
-
-const inputAddress = document.querySelector('#address');
 
 //главная красная метка
 const MAIN_MARKER_ICON = {
@@ -39,12 +23,28 @@ const MULTIPLE_MARKER = {
   iconSize: [40, 40],
   iconAnchor: [20, 40]};
 
-const map = L.map('map-canvas').setView(MAIN_MARKER, ZOOM);
+const MainMarker = {
+  lat: 35.6895,
+  lng: 139.692};
+
+const inputAddress = document.querySelector('#address');
+
+const showAlert = (message) => {
+  const alertContainer = document.createElement('div');
+  alertContainer.classList.add('alert-error');
+  alertContainer.textContent = message;
+  document.body.append(alertContainer);
+  setTimeout(() => {
+    alertContainer.remove();
+  }, 5000);
+};
+
+const map = L.map('map-canvas').setView(MainMarker, ZOOM);
 
 const mainPinIcon = L.icon(MAIN_MARKER_ICON);
 
 const mainPinMarker = L.marker(
-  MAIN_MARKER, {
+  MainMarker, {
     draggable: true,
     icon: mainPinIcon,
   });
@@ -80,7 +80,7 @@ const createMultipleMarker = (cards) => {
 
 const addCardsInMarker = () => {
   //setActiveState();
-  inputAddress.value = `${MAIN_MARKER.lat}, ${MAIN_MARKER.lng}`;
+  inputAddress.value = `${MainMarker.lat}, ${MainMarker.lng}`;
   getData(
     (cards) => createMultipleMarker(cards.slice(0, 10)),
     () => showAlert('Ошибка в получении данных с сервера!'),
@@ -88,11 +88,11 @@ const addCardsInMarker = () => {
 };
 
 function backToCenter() {
-  map.panTo([MAIN_MARKER.lat, MAIN_MARKER.lng]);
+  map.panTo([MainMarker.lat, MainMarker.lng]);
 }
 
 export {
   addCardsInMarker,
   backToCenter,
-  MAIN_MARKER
+  MainMarker
 };
