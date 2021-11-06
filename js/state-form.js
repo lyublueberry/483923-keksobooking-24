@@ -16,9 +16,6 @@ const loadingInputImages = formAd.querySelector('#images');
 const featureBtnBigItems = featuresBtnBig.querySelectorAll('.features__checkbox.visually-hidden');
 const featuresBtn = document.querySelector('.map__features');
 const featureBtnItems = featuresBtn.querySelectorAll('.map__checkbox.visually-hidden');
-
-//const ppp = document.querySelector('.map__filters-container');
-
 const formFilter = document.querySelector('.map__filters');
 const formItems = formFilter.querySelectorAll('.map__filter');
 
