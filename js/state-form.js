@@ -26,12 +26,12 @@ const formAdItems = [
 const setStateFilterForm = (state) => {
   if (state) {
     formItems.forEach((formItem) => {
-      formItem.disabled = false;
+      formItem.disabled = !state;
     });
     formFilter.classList.remove('ad-form--disabled');
   } else {
     formItems.forEach((formItem) => {
-      formItem.disabled = true;
+      formItem.disabled = state;
     });
     formFilter.classList.add('ad-form--disabled');
   }
@@ -40,11 +40,11 @@ const setStateFilterForm = (state) => {
 const setStateFeaturesBtnsBigs = (state) => {
   if (state) {
     featureBtnBigItems.forEach((featureBtnBigItem) => {
-      featureBtnBigItem.disabled = false;
+      featureBtnBigItem.disabled = !state;
     });
   } else {
     featureBtnBigItems.forEach((featureBtnBigItem) => {
-      featureBtnBigItem.disabled = true;
+      featureBtnBigItem.disabled = state;
     });
   }
 };
@@ -52,11 +52,11 @@ const setStateFeaturesBtnsBigs = (state) => {
 const setStateFeaturesBtns = (state) => {
   if (state) {
     featureBtnItems.forEach((featureBtnItem) => {
-      featureBtnItem.disabled = false;
+      featureBtnItem.disabled = !state;
     });
   } else {
     featureBtnItems.forEach((featureBtnItem) => {
-      featureBtnItem.disabled = true;
+      featureBtnItem.disabled = state;
     });
   }
 };
@@ -64,12 +64,12 @@ const setStateFeaturesBtns = (state) => {
 const setStateForm = (state) => {
   if (state) {
     formAdItems.forEach((formAdItem) => {
-      formAdItem.disabled = false;
+      formAdItem.disabled = !state;
     });
     formAd.classList.remove('ad-form--disabled');
   } else {
     formAdItems.forEach((formAdItem) => {
-      formAdItem.disabled = true;
+      formAdItem.disabled = state;
     });
     formAd.classList.add('ad-form--disabled');
   }
