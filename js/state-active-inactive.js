@@ -51,7 +51,6 @@ const setBlockingFormAdd = () => {
   formAd.classList.add('ad-form--disabled');
 };
 
-
 const removeBlockingFilterForm = () => {
   formItems.forEach((formItem) => {
     formItem.disabled = false;
@@ -79,7 +78,6 @@ const removeBlockingFormAdd = ()  =>{
   removeBlockingFeaturesBtns();
   formAd.classList.remove('ad-form--disabled');
 };
-
 
 const stateActivOrInactive = (falseOrTrue) =>{
   if(falseOrTrue){

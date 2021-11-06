@@ -36,7 +36,7 @@ const MainMarker = {
   lat: LAT,
   lng: LNG};
 
-const map = L.map('map-canvas').on('load', stateActivOrInactive).setView(MainMarker, ZOOM);
+const map = L.map('map-canvas').on('load', ()=>{stateActivOrInactive(true);}).setView(MainMarker, ZOOM);
 
 const mainPinIcon = L.icon(MAIN_MARKER_ICON);
 
