@@ -23,70 +23,63 @@ const formAdItems = [
   loadingInputAvatar, btnPublish, btnReset, inputTitle, inputAddress, selectTypeHousing, inputPrice, selectTimein, selectTimeout,
   selectRoomNumber, selectCapacity, txtDescription, loadingInputImages];
 
-const setBlockingFilterForm = () => {
-  formItems.forEach((formItem) => {
-    formItem.disabled = true;
-  });
-  formFilter.classList.add('ad-form--disabled');
+const setStateFilterForm = (state) => {
+  if (state) {
+    formItems.forEach((formItem) => {
+      formItem.disabled = false;
+    });
+    formFilter.classList.remove('ad-form--disabled');
+  } else {
+    formItems.forEach((formItem) => {
+      formItem.disabled = true;
+    });
+    formFilter.classList.add('ad-form--disabled');
+  }
 };
 
-const setBlockingFeaturesBtnsBigs = () => {
-  featureBtnBigItems.forEach((featureBtnBigItem) => {
-    featureBtnBigItem.disabled = true;
-  });
+const setStateFeaturesBtnsBigs = (state) => {
+  if (state) {
+    featureBtnBigItems.forEach((featureBtnBigItem) => {
+      featureBtnBigItem.disabled = false;
+    });
+  } else {
+    featureBtnBigItems.forEach((featureBtnBigItem) => {
+      featureBtnBigItem.disabled = true;
+    });
+  }
 };
 
-const setBlockingFeaturesBtns = () => {
-  featureBtnItems.forEach((featureBtnItem) => {
-    featureBtnItem.disabled = true;
-  });
+const setStateFeaturesBtns = (state) => {
+  if (state) {
+    featureBtnItems.forEach((featureBtnItem) => {
+      featureBtnItem.disabled = false;
+    });
+  } else {
+    featureBtnItems.forEach((featureBtnItem) => {
+      featureBtnItem.disabled = true;
+    });
+  }
 };
 
-const setBlockingFormAdd = () => {
-  formAdItems.forEach((formAdItem) => {
-    formAdItem.disabled = true;
-  });
-  setBlockingFeaturesBtnsBigs();
-  setBlockingFeaturesBtns();
-  formAd.classList.add('ad-form--disabled');
-};
-
-const removeBlockingFilterForm = () => {
-  formItems.forEach((formItem) => {
-    formItem.disabled = false;
-  });
-  formFilter.classList.remove('ad-form--disabled');
-};
-
-const removeBlockingFeaturesBtnsBigs = () => {
-  featureBtnBigItems.forEach((featureBtnBigItem) => {
-    featureBtnBigItem.disabled = false;
-  });
-};
-
-const removeBlockingFeaturesBtns = () => {
-  featureBtnItems.forEach((featureBtnItem) => {
-    featureBtnItem.disabled = false;
-  });
-};
-
-const removeBlockingFormAdd = () => {
-  formAdItems.forEach((formAdItem) => {
-    formAdItem.disabled = false;
-  });
-  removeBlockingFeaturesBtnsBigs();
-  removeBlockingFeaturesBtns();
-  formAd.classList.remove('ad-form--disabled');
+const setStateForm = (state) => {
+  if (state) {
+    formAdItems.forEach((formAdItem) => {
+      formAdItem.disabled = false;
+    });
+    formAd.classList.remove('ad-form--disabled');
+  } else {
+    formAdItems.forEach((formAdItem) => {
+      formAdItem.disabled = true;
+    });
+    formAd.classList.add('ad-form--disabled');
+  }
+  setStateFeaturesBtnsBigs(state);
+  setStateFeaturesBtns(state);
 };
 
 const togglePageState = (state) => {
-  if (state) {
-    removeBlockingFilterForm();
-    removeBlockingFormAdd();
-  } else {
-    setBlockingFormAdd();
-    setBlockingFilterForm();
-  }
+  setStateFilterForm(state);
+  setStateForm(state);
 };
 
 export {

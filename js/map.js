@@ -6,7 +6,7 @@ import {
   getData
 } from './api.js';
 
-import { togglePageState } from './state-active-inactive.js';
+import { togglePageState } from './state-form.js';
 
 const ATTRIBUTION = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
 const TYLE_LAYER = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
