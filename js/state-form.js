@@ -27,7 +27,7 @@ const setStateFilterForm = (state) => {
   formItems.forEach((formItem) => {
     formItem.disabled = !state;
   });
-  formFilter.classList.toggle('ad-form--disabled');
+  formFilter.classList.toggle('ad-form--disabled', !state);
 };
 
 const setStateFeaturesBtnsBigs = (state) => {
@@ -47,7 +47,7 @@ const setStateForm = (state) => {
     formAdItem.disabled = !state;
   });
 
-  formAd.classList.toggle('ad-form--disabled');
+  formAd.classList.toggle('ad-form--disabled', !state);
   setStateFeaturesBtnsBigs(state);
   setStateFeaturesBtns(state);
 };
