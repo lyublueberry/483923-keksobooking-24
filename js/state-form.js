@@ -24,53 +24,35 @@ const formAdItems = [
   selectRoomNumber, selectCapacity, txtDescription, loadingInputImages];
 
 const setStateFilterForm = (state) => {
+  formItems.forEach((formItem) => {
+    formItem.disabled = !state;
+  });
   if (state) {
-    formItems.forEach((formItem) => {
-      formItem.disabled = !state;
-    });
     formFilter.classList.remove('ad-form--disabled');
   } else {
-    formItems.forEach((formItem) => {
-      formItem.disabled = state;
-    });
     formFilter.classList.add('ad-form--disabled');
   }
 };
 
 const setStateFeaturesBtnsBigs = (state) => {
-  if (state) {
-    featureBtnBigItems.forEach((featureBtnBigItem) => {
-      featureBtnBigItem.disabled = !state;
-    });
-  } else {
-    featureBtnBigItems.forEach((featureBtnBigItem) => {
-      featureBtnBigItem.disabled = state;
-    });
-  }
+  featureBtnBigItems.forEach((featureBtnBigItem) => {
+    featureBtnBigItem.disabled = !state;
+  });
 };
 
 const setStateFeaturesBtns = (state) => {
-  if (state) {
-    featureBtnItems.forEach((featureBtnItem) => {
-      featureBtnItem.disabled = !state;
-    });
-  } else {
-    featureBtnItems.forEach((featureBtnItem) => {
-      featureBtnItem.disabled = state;
-    });
-  }
+  featureBtnItems.forEach((featureBtnItem) => {
+    featureBtnItem.disabled = !state;
+  });
 };
 
 const setStateForm = (state) => {
+  formAdItems.forEach((formAdItem) => {
+    formAdItem.disabled = !state;
+  });
   if (state) {
-    formAdItems.forEach((formAdItem) => {
-      formAdItem.disabled = !state;
-    });
     formAd.classList.remove('ad-form--disabled');
   } else {
-    formAdItems.forEach((formAdItem) => {
-      formAdItem.disabled = state;
-    });
     formAd.classList.add('ad-form--disabled');
   }
   setStateFeaturesBtnsBigs(state);
