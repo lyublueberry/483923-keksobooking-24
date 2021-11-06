@@ -16,6 +16,9 @@ const loadingInputImages = formAd.querySelector('#images');
 const featureBtnBigItems = featuresBtnBig.querySelectorAll('.features__checkbox.visually-hidden');
 const featuresBtn = document.querySelector('.map__features');
 const featureBtnItems = featuresBtn.querySelectorAll('.map__checkbox.visually-hidden');
+
+//const ppp = document.querySelector('.map__filters-container');
+
 const formFilter = document.querySelector('.map__filters');
 const formItems = formFilter.querySelectorAll('.map__filter');
 
@@ -27,11 +30,7 @@ const setStateFilterForm = (state) => {
   formItems.forEach((formItem) => {
     formItem.disabled = !state;
   });
-  if (state) {
-    formFilter.classList.remove('ad-form--disabled');
-  } else {
-    formFilter.classList.add('ad-form--disabled');
-  }
+  formFilter.classList.toggle('ad-form--disabled');
 };
 
 const setStateFeaturesBtnsBigs = (state) => {
@@ -50,11 +49,8 @@ const setStateForm = (state) => {
   formAdItems.forEach((formAdItem) => {
     formAdItem.disabled = !state;
   });
-  if (state) {
-    formAd.classList.remove('ad-form--disabled');
-  } else {
-    formAd.classList.add('ad-form--disabled');
-  }
+
+  formAd.classList.toggle('ad-form--disabled');
   setStateFeaturesBtnsBigs(state);
   setStateFeaturesBtns(state);
 };

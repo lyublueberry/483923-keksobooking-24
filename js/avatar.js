@@ -10,9 +10,8 @@ const setAvatarPhoto = () => {
     const file = fileChooserAvatar.files[0];
     const fileName = file.name.toLowerCase();
 
-    const matches = FILE_TYPES.some((it) => {
-      return fileName.endsWith(it);
-    });
+    const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
+
 
     if (matches) {
       previewAvatar.src = URL.createObjectURL(file);
@@ -20,22 +19,26 @@ const setAvatarPhoto = () => {
   });
 };
 
-const setHousingPhoto = () =>{
-  fileChooserHousing.addEventListener('change', () =>{
+const setHousingPhoto = () => {
+  fileChooserHousing.addEventListener('change', () => {
     const file = fileChooserHousing.files[0];
     const fileName = file.name.toLowerCase();
-    const matches = FILE_TYPES.some((item) => {
-      return fileName.endsWith(item);
-    });
+    const matches = FILE_TYPES.some((item) => fileName.endsWith(item));
+
     if (matches) {
       const housingImg = document.createElement('img');
       previewHousing.appendChild(housingImg);
       housingImg.src = URL.createObjectURL(file);
-      housingImg.alt='Фотография жилья';
+      housingImg.alt = 'Фотография жилья';
       housingImg.style.width = '240px';
       housingImg.style.height = '240px';
     }
   });
 };
 
-export{setHousingPhoto, setAvatarPhoto, previewAvatar, previewHousing};
+export {
+  setHousingPhoto,
+  setAvatarPhoto,
+  previewAvatar,
+  previewHousing
+};
