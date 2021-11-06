@@ -575,12 +575,21 @@ fieldset {
 .ad-form__photo {
   margin-right: 10px;
   margin-bottom: 10px;
+  align-items: center;
+  display: flex;
+  text-align: center;
+  padding: 0 15px;
 
   width: 70px;
   height: 70px;
 
   background-color: #e4e4de;
   border-radius: 5px;
+}
+
+.ad-form__photo img{
+  width: 40px;
+  height: 44px;
 }
 
 .ad-form__element--submit {

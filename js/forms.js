@@ -18,6 +18,8 @@ const cardForm = document.querySelector('.ad-form');
 const inputAddress = document.querySelector('#address');
 const errorMessage = document.querySelector('#error').content;
 const errorSuccess = document.querySelector('#success').content;
+const photoUser = document.querySelector('.setup-user-pic');
+const photoHousing = document.querySelector('.setup-housing-pic');
 
 const PriceHousing = {
   bungalow: 0,
@@ -77,6 +79,8 @@ const clickResetForm = () => {
       inputAddress.value = `${MainMarker.lat}, ${MainMarker.lng}`;
       resetMap();
       document.querySelector('.map__filters').reset();
+      photoUser.setAttribute('src', './img/muffin-grey.svg');
+      photoHousing.setAttribute('src', './img/muffin-grey.svg');
     }, 0);
   });
 };
@@ -108,8 +112,9 @@ const successMessageRemove = (evt) => {
     successRemove.remove();
   } else {successRemove.remove();}
   inputAddress.value = `${MainMarker.lat}, ${MainMarker.lng}`;
+  photoUser.setAttribute('src', './img/muffin-grey.svg');
+  photoHousing.setAttribute('src', './img/muffin-grey.svg');
   resetMap();
-  document.querySelector('.map__filters').reset();
   cardForm.reset();
 
 };

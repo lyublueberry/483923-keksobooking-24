@@ -1,5 +1,5 @@
 import {
-  createCards
+  createCard
 } from './template-element.js';
 
 import {
@@ -71,7 +71,7 @@ const createMultipleMarker = (cards) => {
     }, {
       icon,
     });
-    marker.addTo(multipleMarker).bindPopup(createCards(cardsItem));
+    marker.addTo(multipleMarker).bindPopup(createCard(cardsItem));
   });
 };
 

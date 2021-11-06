@@ -7,7 +7,7 @@ const OfferTypes = {
 
 const similarTemplateAd = document.querySelector('#card').content.querySelector('.popup'); //здесь используется поиск по # т.к. нет класса
 
-const createCards = (card) => {
+const createCard = (card) => {
   const adElement = similarTemplateAd.cloneNode(true);
   const title = adElement.querySelector('.popup__title');
   const address = adElement.querySelector('.popup__text--address');
@@ -60,5 +60,5 @@ const createCards = (card) => {
 };
 
 export {
-  createCards
+  createCard
 };
