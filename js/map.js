@@ -6,7 +6,7 @@ import {
   getData
 } from './api.js';
 
-import { stateActivOrInactive } from './state-active-inactive.js';
+import { togglePageState } from './state-active-inactive.js';
 
 const ATTRIBUTION = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
 const TYLE_LAYER = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
@@ -36,7 +36,7 @@ const MainMarker = {
   lat: LAT,
   lng: LNG};
 
-const map = L.map('map-canvas').on('load', ()=>{stateActivOrInactive(true);}).setView(MainMarker, ZOOM);
+const map = L.map('map-canvas').on('load', ()=>{togglePageState(true);}).setView(MainMarker, ZOOM);
 
 const mainPinIcon = L.icon(MAIN_MARKER_ICON);
 

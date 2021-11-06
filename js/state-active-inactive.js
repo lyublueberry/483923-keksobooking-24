@@ -70,7 +70,7 @@ const removeBlockingFeaturesBtns = () => {
   });
 };
 
-const removeBlockingFormAdd = ()  =>{
+const removeBlockingFormAdd = () => {
   formAdItems.forEach((formAdItem) => {
     formAdItem.disabled = false;
   });
@@ -79,16 +79,16 @@ const removeBlockingFormAdd = ()  =>{
   formAd.classList.remove('ad-form--disabled');
 };
 
-const stateActivOrInactive = (falseOrTrue) =>{
-  if(falseOrTrue){
+const togglePageState = (state) => {
+  if (state) {
     removeBlockingFilterForm();
     removeBlockingFormAdd();
-  } else{
+  } else {
     setBlockingFormAdd();
     setBlockingFilterForm();
   }
 };
 
 export {
-  stateActivOrInactive
+  togglePageState
 };
