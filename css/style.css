@@ -1041,14 +1041,14 @@ fieldset {
 /*Сообщение об ошибке в получении данных с сервера*/
 .alert-error{
   z-index: 410;
-  position:'absolute';
-  width: '1200px';
-  top: '10%';
-  bottom:'auto';
-  padding: '10px 3px';
-  font-size: '25px';
-  font-weight: 'bold';
-  text-align: 'center';
-  background-color: 'rgba(235, 110, 110, 0.7)';
-  color: '#353535';
+  position:absolute;
+  width: 1200px;
+  top: 10%;
+  bottom:auto;
+  padding: 10px 3px;
+  font-size: 25px;
+  font-weight: bold;
+  text-align: center;
+  background-color: rgba(235, 110, 110, 0.7);
+  color: #070707;
 }

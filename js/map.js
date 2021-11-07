@@ -6,7 +6,9 @@ import {
   getData
 } from './api.js';
 
-import { togglePageState } from './state-form.js';
+import {
+  togglePageState
+} from './state-form.js';
 
 const ATTRIBUTION = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
 const TYLE_LAYER = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
@@ -18,6 +20,9 @@ const LNG = 139.692;
 const URL_MAIN_MARKER = './img/main-pin.svg';
 const URL_MULTIPLE_MARKER = './img/pin.svg';
 const inputAddress = document.querySelector('#address');
+const fixNumber = 5;
+const quantityMarker = 10;
+const timeShowALert = 5000;
 
 //главная красная метка
 const MAIN_MARKER_ICON = {
@@ -30,13 +35,17 @@ const MAIN_MARKER_ICON = {
 const MULTIPLE_MARKER = {
   iconUrl: URL_MULTIPLE_MARKER,
   iconSize: [SIZE_MULTIPLE_MARKER, SIZE_MULTIPLE_MARKER],
-  iconAnchor: [SIZE_MULTIPLE_MARKER / 2, SIZE_MULTIPLE_MARKER / 2]};
+  iconAnchor: [SIZE_MULTIPLE_MARKER / 2, SIZE_MULTIPLE_MARKER / 2]
+};
 
 const MainMarker = {
   lat: LAT,
-  lng: LNG};
+  lng: LNG
+};
 
-const map = L.map('map-canvas').on('load', ()=>{togglePageState(true);}).setView(MainMarker, ZOOM);
+const map = L.map('map-canvas').on('load', () => {
+  togglePageState(true);
+}).setView(MainMarker, ZOOM);
 
 const mainPinIcon = L.icon(MAIN_MARKER_ICON);
 
@@ -50,10 +59,8 @@ mainPinMarker.addTo(map);
 
 //двигаем по карте и получаем координаты
 mainPinMarker.on('moveend', (evt) => {
-  const {
-    lat,
-    lng} = evt.target.getLatLng();
-  inputAddress.value = `${lat.toFixed(5)}, ${lng.toFixed(5)}`;
+  const {lat, lng} = evt.target.getLatLng();
+  inputAddress.value = `${lat.toFixed(fixNumber)}, ${lng.toFixed(fixNumber)}`;
 });
 
 L.tileLayer(TYLE_LAYER, {
@@ -82,14 +89,13 @@ const showAlert = (message) => {
   document.body.append(alertContainer);
   setTimeout(() => {
     alertContainer.remove();
-  }, 5000);
+  }, timeShowALert);
 };
 
 const addCardsInMarker = () => {
-  //setActiveState();
   inputAddress.value = `${MainMarker.lat}, ${MainMarker.lng}`;
   getData(
-    (cards) => createMultipleMarker(cards.slice(0, 10)),
+    (cards) => createMultipleMarker(cards.slice(0, quantityMarker)),
     () => showAlert('Ошибка в получении данных с сервера!'),
   );
 };

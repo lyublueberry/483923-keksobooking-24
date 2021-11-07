@@ -3,8 +3,6 @@ const getData = (onSuccess, onFail) => {
     .then((response) => {
       if(response.ok){
         return response.json();
-      } else {
-        throw new Error('Ошибка в получении данных с сервера');
       }
     })
     .then((data) => {

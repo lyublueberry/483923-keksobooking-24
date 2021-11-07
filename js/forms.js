@@ -73,7 +73,6 @@ const onChangeTypeHousingAndPriceNight = () => {
 
 //кнопка сброса
 const clickResetForm = () => {
-
   cardForm.addEventListener('reset', () => {
     setTimeout(() => {
       inputAddress.value = `${MainMarker.lat}, ${MainMarker.lng}`;
@@ -93,7 +92,6 @@ const errorMessageRemove = (evt) => {
   if (evt.key === 'Escape') {
     successRemove.remove();
   }
-  successRemove.remove();
 };
 
 const showErrorMessage = () => {
@@ -110,7 +108,10 @@ const successMessageRemove = (evt) => {
   evt.preventDefault();
   if (evt.key === 'Escape') {
     successRemove.remove();
-  } else {successRemove.remove();}
+  } else {document.addEventListener('click', () => {
+    successRemove.remove();
+  });
+  }
   inputAddress.value = `${MainMarker.lat}, ${MainMarker.lng}`;
   photoUser.setAttribute('src', './img/muffin-grey.svg');
   photoHousing.setAttribute('src', './img/muffin-grey.svg');
