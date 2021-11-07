@@ -19,10 +19,11 @@ const LAT = 35.6895;
 const LNG = 139.692;
 const URL_MAIN_MARKER = './img/main-pin.svg';
 const URL_MULTIPLE_MARKER = './img/pin.svg';
+const FIX_NUMBER = 5;
+const MARKER_AMOUNT = 10;
+const SHOW_ALERT_TIME = 5000;
 const inputAddress = document.querySelector('#address');
-const fixNumber = 5;
-const quantityMarker = 10;
-const timeShowALert = 5000;
+
 
 //главная красная метка
 const MAIN_MARKER_ICON = {
@@ -35,13 +36,11 @@ const MAIN_MARKER_ICON = {
 const MULTIPLE_MARKER = {
   iconUrl: URL_MULTIPLE_MARKER,
   iconSize: [SIZE_MULTIPLE_MARKER, SIZE_MULTIPLE_MARKER],
-  iconAnchor: [SIZE_MULTIPLE_MARKER / 2, SIZE_MULTIPLE_MARKER / 2]
-};
+  iconAnchor: [SIZE_MULTIPLE_MARKER / 2, SIZE_MULTIPLE_MARKER / 2]};
 
 const MainMarker = {
   lat: LAT,
-  lng: LNG
-};
+  lng: LNG};
 
 const map = L.map('map-canvas').on('load', () => {
   togglePageState(true);
@@ -60,7 +59,7 @@ mainPinMarker.addTo(map);
 //двигаем по карте и получаем координаты
 mainPinMarker.on('moveend', (evt) => {
   const {lat, lng} = evt.target.getLatLng();
-  inputAddress.value = `${lat.toFixed(fixNumber)}, ${lng.toFixed(fixNumber)}`;
+  inputAddress.value = `${lat.toFixed(FIX_NUMBER)}, ${lng.toFixed(FIX_NUMBER)}`;
 });
 
 L.tileLayer(TYLE_LAYER, {
@@ -89,13 +88,13 @@ const showAlert = (message) => {
   document.body.append(alertContainer);
   setTimeout(() => {
     alertContainer.remove();
-  }, timeShowALert);
+  }, SHOW_ALERT_TIME);
 };
 
 const addCardsInMarker = () => {
   inputAddress.value = `${MainMarker.lat}, ${MainMarker.lng}`;
   getData(
-    (cards) => createMultipleMarker(cards.slice(0, quantityMarker)),
+    (cards) => createMultipleMarker(cards.slice(0, MARKER_AMOUNT)),
     () => showAlert('Ошибка в получении данных с сервера!'),
   );
 };

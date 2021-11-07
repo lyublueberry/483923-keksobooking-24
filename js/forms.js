@@ -58,7 +58,11 @@ const checkFieldIsValidPrice = () => {
 const onChangeCapacityAndRoomNumber = () => {
   capacitySelect.addEventListener('change', function () {
     const valueOptionCapacity = this.value;
-    valueOptionCapacity > selectRoomNumber.value ? capacitySelect.setCustomValidity('Данное значение неверно') : capacitySelect.setCustomValidity('');
+    if (valueOptionCapacity > selectRoomNumber.value) {
+      capacitySelect.setCustomValidity('Данное значение неверно');
+    } else {
+      capacitySelect.setCustomValidity('');
+    }
   });
 };
 
@@ -78,61 +82,99 @@ const clickResetForm = () => {
       inputAddress.value = `${MainMarker.lat}, ${MainMarker.lng}`;
       resetMap();
       document.querySelector('.map__filters').reset();
-      photoUser.setAttribute('src', './img/muffin-grey.svg');
-      photoHousing.setAttribute('src', './img/muffin-grey.svg');
+      photoUser.src = './img/muffin-grey.svg';
+      photoHousing.src = './img/muffin-grey.svg';
     }, 0);
   });
 };
 
 //сообщение об успехе/ошибке отправки
-
-const errorMessageRemove = (evt) => {
-  const successRemove = document.querySelector('.error');
+const errorButtonClickHandler = (evt) => {
+  const successError = document.querySelector('.error');
   evt.preventDefault();
-  if (evt.key === 'Escape') {
-    successRemove.remove();
+  evt.preventDefault();
+  if (evt.type === 'click') {
+    successError.remove();
+    inputAddress.value = `${MainMarker.lat}, ${MainMarker.lng}`;
+    resetMap();
+    document.querySelector('.map__filters').reset();
+    photoUser.src = './img/muffin-grey.svg';
+    photoHousing.src = './img/muffin-grey.svg';
   }
 };
+
+const errorButtonKeydownHandler = (evt) => {
+  const successError = document.querySelector('.error');
+  evt.preventDefault();
+  if (evt.key === 'Escape') {
+    successError.remove();
+    inputAddress.value = `${MainMarker.lat}, ${MainMarker.lng}`;
+    resetMap();
+    document.querySelector('.map__filters').reset();
+    photoUser.src = './img/muffin-grey.svg';
+    photoHousing.src = './img/muffin-grey.svg';
+  }
+};
+
+const errorMouseClickHandler = (evt) => {
+  const successError = document.querySelector('.error');
+  evt.preventDefault();
+  if (evt.type === 'click') {
+    successError.remove();
+    inputAddress.value = `${MainMarker.lat}, ${MainMarker.lng}`;
+    resetMap();
+    document.querySelector('.map__filters').reset();
+    photoUser.src = './img/muffin-grey.svg';
+    photoHousing.src = './img/muffin-grey.svg';
+  }
+};
+
 
 const showErrorMessage = () => {
   const errorModal = errorMessage.cloneNode(true);
   const btnError = errorModal.querySelector('.error__button');
   document.body.appendChild(errorModal);
-  document.addEventListener('keydown', errorMessageRemove);
-  document.addEventListener('click', errorMessageRemove);
-  btnError.addEventListener('click', errorMessageRemove);
+  document.addEventListener('keydown', errorButtonKeydownHandler);
+  document.addEventListener('click', errorMouseClickHandler);
+  btnError.addEventListener('click', errorButtonClickHandler);
+  btnError.removeEventListener('click', errorButtonClickHandler);
 };
 
-const successMessageRemove = (evt) => {
+const successButtonKeydownHandler = (evt) => {
   const successRemove = document.querySelector('.success');
-  evt.preventDefault();
   if (evt.key === 'Escape') {
     successRemove.remove();
-  } else {document.addEventListener('click', () => {
-    successRemove.remove();
-  });
+    inputAddress.value = `${MainMarker.lat}, ${MainMarker.lng}`;
+    photoUser.src = './img/muffin-grey.svg';
+    photoHousing.src = './img/muffin-grey.svg';
+    resetMap();
+    cardForm.reset();
   }
-  inputAddress.value = `${MainMarker.lat}, ${MainMarker.lng}`;
-  photoUser.setAttribute('src', './img/muffin-grey.svg');
-  photoHousing.setAttribute('src', './img/muffin-grey.svg');
-  resetMap();
-  cardForm.reset();
+};
 
+const successButtonClickHandler = (evt) => {
+  const successRemove = document.querySelector('.success');
+  if (evt.type === 'click') {
+    successRemove.remove();
+    inputAddress.value = `${MainMarker.lat}, ${MainMarker.lng}`;
+    photoUser.src = './img/muffin-grey.svg';
+    photoHousing.src = './img/muffin-grey.svg';
+    resetMap();
+    cardForm.reset();
+  }
 };
 
 const showSuccessMessage = () => {
   const successModal = errorSuccess.cloneNode(true);
   document.body.appendChild(successModal);
-  document.addEventListener('keydown', successMessageRemove);
-  document.addEventListener('click', successMessageRemove);
-
+  document.addEventListener('keydown', successButtonKeydownHandler);
+  document.addEventListener('click', successButtonClickHandler);
 };
 
 //отправка формы
 const setUserFormSubmit = () => {
   cardForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
-
     sendData(
       () => showSuccessMessage(),
       () => showErrorMessage(),
@@ -148,6 +190,11 @@ selectTimeIn.addEventListener('click', function () {
 selectTimeOut.addEventListener('click', function () {
   selectTimeIn.value = this.value;
 });
+
+document.removeEventListener('keydown', successButtonKeydownHandler);
+document.removeEventListener('click', successButtonClickHandler);
+document.removeEventListener('keydown', errorButtonKeydownHandler);
+document.removeEventListener('click', errorMouseClickHandler);
 
 export {
   checkFieldIsValidTitle,

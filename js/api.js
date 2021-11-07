@@ -24,9 +24,9 @@ const sendData = (onSuccess, onFail, body) => {
     .then((response) => {
       if (response.ok) {
         onSuccess();
-      } else {
+      } /* else {
         onFail();
-      }
+      } */
     })
     .catch(() => {
       onFail('Не удалось отправить форму. Попробуйте ещё раз');
