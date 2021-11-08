@@ -4,7 +4,7 @@ import {
   onChangeCapacityAndRoomNumber,
   onChangeTypeHousingAndPriceNight,
   setUserFormSubmit,
-  clickResetForm
+  clickResetBtnForm
 } from './forms.js';
 
 import {
@@ -24,4 +24,4 @@ onChangeTypeHousingAndPriceNight();
 setUserFormSubmit();
 setAvatarPhoto();
 setHousingPhoto();
-clickResetForm();
+clickResetBtnForm();

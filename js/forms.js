@@ -20,8 +20,8 @@ const errorMessage = document.querySelector('#error').content;
 const errorSuccess = document.querySelector('#success').content;
 const photoUser = document.querySelector('.setup-user-pic');
 const photoHousing = document.querySelector('.setup-housing-pic');
-/* const btnResetForm = document.querySelector('.ad-form__reset');
-const filtersForm = document.querySelector('.map__filters'); */
+const btnResetForm = document.querySelector('.ad-form__reset');
+const filtersForm = document.querySelector('.map__filters');
 
 const PriceHousing = {
   bungalow: 0,
@@ -78,20 +78,22 @@ const onChangeTypeHousingAndPriceNight = () => {
 };
 
 //кнопка сброса
-/* const ppp = () => {
+const clickResetBtnFormHandler = () => {
   cardForm.reset();
   filtersForm.reset();
   resetMap();
   photoUser.src = './img/muffin-grey.svg';
   photoHousing.src = './img/muffin-grey.svg';
+  setTimeout(() => {
+    inputAddress.value = `${MainMarker.lat}, ${MainMarker.lng}`;
+  }, 0);
 };
 
-const resP = () => {
-  btnResetForm.addEventListener('click', ppp);
-  inputAddress.value = `${MainMarker.lat}, ${MainMarker.lng}`;
-}; */
+const clickResetBtnForm = () => {
+  btnResetForm.addEventListener('click', clickResetBtnFormHandler);
+};
 
-const clickResetForm = () => {
+/* const clickResetForm = () => {
   cardForm.addEventListener('reset', (evt) => {
     evt.preventDefault();
     cardForm.reset();
@@ -99,7 +101,7 @@ const clickResetForm = () => {
     resetMap();
     document.querySelector('.map__filters').reset();
   });
-};
+}; */
 
 /* const clickResetForm = () => {
   cardForm.addEventListener('reset', () => {
@@ -113,47 +115,40 @@ const clickResetForm = () => {
   });
 }; */
 
-//сообщение об успехе/ошибке отправки
-const errorButtonClickHandler = (evt) => {
+const startupForm = () => {
+  const successRemove = document.querySelector('.success');
+  successRemove.remove();
+  inputAddress.value = `${MainMarker.lat}, ${MainMarker.lng}`;
+  photoUser.src = './img/muffin-grey.svg';
+  photoHousing.src = './img/muffin-grey.svg';
+  resetMap();
+  cardForm.reset();
+};
+
+const savedFormState = (evt) => {
   const successError = document.querySelector('.error');
   evt.preventDefault();
-  evt.preventDefault();
+  successError.remove();
+};
+
+//сообщение об успехе/ошибке отправки
+const errorButtonClickHandler = (evt) => {
   if (evt.type === 'click') {
-    successError.remove();
-    inputAddress.value = `${MainMarker.lat}, ${MainMarker.lng}`;
-    resetMap();
-    document.querySelector('.map__filters').reset();
-    photoUser.src = './img/muffin-grey.svg';
-    photoHousing.src = './img/muffin-grey.svg';
+    savedFormState();
   }
 };
 
 const errorButtonKeydownHandler = (evt) => {
-  const successError = document.querySelector('.error');
-  evt.preventDefault();
   if (evt.key === 'Escape') {
-    successError.remove();
-    inputAddress.value = `${MainMarker.lat}, ${MainMarker.lng}`;
-    resetMap();
-    document.querySelector('.map__filters').reset();
-    photoUser.src = './img/muffin-grey.svg';
-    photoHousing.src = './img/muffin-grey.svg';
+    savedFormState();
   }
 };
 
 const errorMouseClickHandler = (evt) => {
-  const successError = document.querySelector('.error');
-  evt.preventDefault();
   if (evt.type === 'click') {
-    successError.remove();
-    inputAddress.value = `${MainMarker.lat}, ${MainMarker.lng}`;
-    resetMap();
-    document.querySelector('.map__filters').reset();
-    photoUser.src = './img/muffin-grey.svg';
-    photoHousing.src = './img/muffin-grey.svg';
+    savedFormState();
   }
 };
-
 
 const showErrorMessage = () => {
   const errorModal = errorMessage.cloneNode(true);
@@ -166,26 +161,14 @@ const showErrorMessage = () => {
 };
 
 const successButtonKeydownHandler = (evt) => {
-  const successRemove = document.querySelector('.success');
   if (evt.key === 'Escape') {
-    successRemove.remove();
-    inputAddress.value = `${MainMarker.lat}, ${MainMarker.lng}`;
-    photoUser.src = './img/muffin-grey.svg';
-    photoHousing.src = './img/muffin-grey.svg';
-    resetMap();
-    cardForm.reset();
+    startupForm();
   }
 };
 
 const successButtonClickHandler = (evt) => {
-  const successRemove = document.querySelector('.success');
   if (evt.type === 'click') {
-    successRemove.remove();
-    inputAddress.value = `${MainMarker.lat}, ${MainMarker.lng}`;
-    photoUser.src = './img/muffin-grey.svg';
-    photoHousing.src = './img/muffin-grey.svg';
-    resetMap();
-    cardForm.reset();
+    startupForm();
   }
 };
 
@@ -232,5 +215,5 @@ export {
   onChangeCapacityAndRoomNumber,
   onChangeTypeHousingAndPriceNight,
   setUserFormSubmit,
-  clickResetForm
+  clickResetBtnForm
 };
