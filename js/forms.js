@@ -109,19 +109,19 @@ const savedFormState = (evt) => {
 };
 
 //сообщение об успехе/ошибке отправки
-const errorButtonClickHandler = (evt) => {
+const popupErrorBtnClickHandler = (evt) => {
   if (evt.type === 'click') {
     savedFormState();
   }
 };
 
-const errorButtonKeydownHandler = (evt) => {
+const popupErrorKeydownHandler = (evt) => {
   if (evt.key === 'Escape') {
     savedFormState();
   }
 };
 
-const errorMouseClickHandler = (evt) => {
+const popupErrorMouseClickHandler = (evt) => {
   if (evt.type === 'click') {
     savedFormState();
   }
@@ -131,19 +131,19 @@ const showErrorMessage = () => {
   const errorModal = errorMessage.cloneNode(true);
   const btnError = errorModal.querySelector('.error__button');
   document.body.appendChild(errorModal);
-  document.addEventListener('keydown', errorButtonKeydownHandler);
-  document.addEventListener('click', errorMouseClickHandler);
-  btnError.addEventListener('click', errorButtonClickHandler);
-  btnError.removeEventListener('click', errorButtonClickHandler);
+  document.addEventListener('keydown', popupErrorKeydownHandler);
+  document.addEventListener('click', popupErrorMouseClickHandler);
+  btnError.addEventListener('click', popupErrorBtnClickHandler);
+  btnError.removeEventListener('click', popupErrorBtnClickHandler);
 };
 
-const successButtonKeydownHandler = (evt) => {
+const popupSuccessKeydownHandler = (evt) => {
   if (evt.key === 'Escape') {
     startupForm();
   }
 };
 
-const successButtonClickHandler = (evt) => {
+const popupSuccessClickHandler = (evt) => {
   if (evt.type === 'click') {
     startupForm();
   }
@@ -152,8 +152,8 @@ const successButtonClickHandler = (evt) => {
 const showSuccessMessage = () => {
   const successModal = errorSuccess.cloneNode(true);
   document.body.appendChild(successModal);
-  document.addEventListener('keydown', successButtonKeydownHandler);
-  document.addEventListener('click', successButtonClickHandler);
+  document.addEventListener('keydown', popupSuccessKeydownHandler);
+  document.addEventListener('click', popupSuccessClickHandler);
 };
 
 /* document.querySelector('#housing-type').addEventListener('click', (evt) => {
@@ -181,10 +181,10 @@ selectTimeOut.addEventListener('click', function () {
   selectTimeIn.value = this.value;
 });
 
-document.removeEventListener('keydown', successButtonKeydownHandler);
-document.removeEventListener('click', successButtonClickHandler);
-document.removeEventListener('keydown', errorButtonKeydownHandler);
-document.removeEventListener('click', errorMouseClickHandler);
+document.removeEventListener('keydown', popupSuccessKeydownHandler);
+document.removeEventListener('click', popupSuccessClickHandler);
+document.removeEventListener('keydown', popupErrorKeydownHandler);
+document.removeEventListener('click', popupErrorMouseClickHandler);
 
 export {
   checkFieldIsValidTitle,
