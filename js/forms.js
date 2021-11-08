@@ -20,6 +20,8 @@ const errorMessage = document.querySelector('#error').content;
 const errorSuccess = document.querySelector('#success').content;
 const photoUser = document.querySelector('.setup-user-pic');
 const photoHousing = document.querySelector('.setup-housing-pic');
+/* const btnResetForm = document.querySelector('.ad-form__reset');
+const filtersForm = document.querySelector('.map__filters'); */
 
 const PriceHousing = {
   bungalow: 0,
@@ -76,7 +78,30 @@ const onChangeTypeHousingAndPriceNight = () => {
 };
 
 //кнопка сброса
+/* const ppp = () => {
+  cardForm.reset();
+  filtersForm.reset();
+  resetMap();
+  photoUser.src = './img/muffin-grey.svg';
+  photoHousing.src = './img/muffin-grey.svg';
+};
+
+const resP = () => {
+  btnResetForm.addEventListener('click', ppp);
+  inputAddress.value = `${MainMarker.lat}, ${MainMarker.lng}`;
+}; */
+
 const clickResetForm = () => {
+  cardForm.addEventListener('reset', (evt) => {
+    evt.preventDefault();
+    cardForm.reset();
+    inputAddress.value = `${MainMarker.lat}, ${MainMarker.lng}`;
+    resetMap();
+    document.querySelector('.map__filters').reset();
+  });
+};
+
+/* const clickResetForm = () => {
   cardForm.addEventListener('reset', () => {
     setTimeout(() => {
       inputAddress.value = `${MainMarker.lat}, ${MainMarker.lng}`;
@@ -86,7 +111,7 @@ const clickResetForm = () => {
       photoHousing.src = './img/muffin-grey.svg';
     }, 0);
   });
-};
+}; */
 
 //сообщение об успехе/ошибке отправки
 const errorButtonClickHandler = (evt) => {
@@ -170,6 +195,11 @@ const showSuccessMessage = () => {
   document.addEventListener('keydown', successButtonKeydownHandler);
   document.addEventListener('click', successButtonClickHandler);
 };
+
+/* document.querySelector('#housing-type').addEventListener('click', (evt) => {
+
+}); */
+
 
 //отправка формы
 const setUserFormSubmit = () => {

@@ -22,6 +22,6 @@ checkFieldIsValidPrice();
 onChangeCapacityAndRoomNumber();
 onChangeTypeHousingAndPriceNight();
 setUserFormSubmit();
-clickResetForm();
 setAvatarPhoto();
 setHousingPhoto();
+clickResetForm();
