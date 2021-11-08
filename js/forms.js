@@ -78,42 +78,19 @@ const onChangeTypeHousingAndPriceNight = () => {
 };
 
 //кнопка сброса
-const clickResetBtnFormHandler = () => {
+const clickResetBtnFormHandler = (evt) => {
+  evt.preventDefault();
   cardForm.reset();
   filtersForm.reset();
   resetMap();
   photoUser.src = './img/muffin-grey.svg';
   photoHousing.src = './img/muffin-grey.svg';
-  setTimeout(() => {
-    inputAddress.value = `${MainMarker.lat}, ${MainMarker.lng}`;
-  }, 0);
+  inputAddress.value = `${MainMarker.lat}, ${MainMarker.lng}`;
 };
 
 const clickResetBtnForm = () => {
   btnResetForm.addEventListener('click', clickResetBtnFormHandler);
 };
-
-/* const clickResetForm = () => {
-  cardForm.addEventListener('reset', (evt) => {
-    evt.preventDefault();
-    cardForm.reset();
-    inputAddress.value = `${MainMarker.lat}, ${MainMarker.lng}`;
-    resetMap();
-    document.querySelector('.map__filters').reset();
-  });
-}; */
-
-/* const clickResetForm = () => {
-  cardForm.addEventListener('reset', () => {
-    setTimeout(() => {
-      inputAddress.value = `${MainMarker.lat}, ${MainMarker.lng}`;
-      resetMap();
-      document.querySelector('.map__filters').reset();
-      photoUser.src = './img/muffin-grey.svg';
-      photoHousing.src = './img/muffin-grey.svg';
-    }, 0);
-  });
-}; */
 
 const startupForm = () => {
   const successRemove = document.querySelector('.success');
