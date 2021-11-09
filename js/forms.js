@@ -31,57 +31,9 @@ const PriceHousing = {
   house: 5000,
   palace: 10000};
 
-
 //первоначальный адрес
 const setAddress = (lat, lng) => {
   inputAddress.value = `${lat}, ${lng}`;
-};
-
-//валидация заголовка объявления
-const checkFieldIsValidTitle = () => {
-  titleAdInput.addEventListener('invalid', () => {
-    if (titleAdInput.validity.tooShort) {
-      titleAdInput.setCustomValidity('Минимальная длина заголовка объявления 30 символов');
-    } else if (titleAdInput.validity.tooLong) {
-      titleAdInput.setCustomValidity('Максимальная длина заголовка объявления 100 символов');
-    } else if (titleAdInput.validity.valueMissing) {
-      titleAdInput.setCustomValidity('Обязательное текстовое поле');
-    } else {
-      titleAdInput.setCustomValidity('');
-    }
-  });
-};
-
-//валидация цены
-const checkFieldIsValidPrice = () => {
-  priceAdInput.addEventListener('invalid', () => {
-    if (priceAdInput.value >= 1000000) {
-      priceAdInput.setCustomValidity('Максимальное значение — 1 000 000');
-    } else {
-      priceAdInput.setCustomValidity('');
-    }
-  });
-};
-
-//соотношение кол-во комнат/мест
-const onChangeCapacityAndRoomNumber = () => {
-  capacitySelect.addEventListener('change', function () {
-    const valueOptionCapacity = this.value;
-    if (valueOptionCapacity > selectRoomNumber.value) {
-      capacitySelect.setCustomValidity('Данное значение неверно');
-    } else {
-      capacitySelect.setCustomValidity('');
-    }
-  });
-};
-
-//соотношение жилья/цена
-const onChangeTypeHousingAndPriceNight = () => {
-  selectTypeHousing.addEventListener('change', function () {
-    const valueTypeHousing = this.value;
-    priceAdInput.placeholder = PriceHousing[valueTypeHousing];
-    priceAdInput.min = PriceHousing[valueTypeHousing];
-  });
 };
 
 //устанавливаем начальные значения
@@ -92,14 +44,6 @@ const startupForm = () => {
   photoUser.src = './img/muffin-grey.svg';
   photoHousing.src = './img/muffin-grey.svg';
   setAddress(MainMarker.lat, MainMarker.lng);
-};
-
-//кнопка сброса
-const clickResetBtnForm = () => {
-  btnResetForm.addEventListener('click', (evt) => {
-    evt.preventDefault();
-    startupForm();
-  });
 };
 
 //убираем окно и сохраняем заполненность формы
@@ -175,17 +119,60 @@ const showErrorMessage = () => {
 
 }); */
 
+//валидация заголовка объявления
+titleAdInput.addEventListener('invalid', () => {
+  if (titleAdInput.validity.tooShort) {
+    titleAdInput.setCustomValidity('Минимальная длина заголовка объявления 30 символов');
+  } else if (titleAdInput.validity.tooLong) {
+    titleAdInput.setCustomValidity('Максимальная длина заголовка объявления 100 символов');
+  } else if (titleAdInput.validity.valueMissing) {
+    titleAdInput.setCustomValidity('Обязательное текстовое поле');
+  } else {
+    titleAdInput.setCustomValidity('');
+  }
+});
+
+//валидация цены
+priceAdInput.addEventListener('invalid', () => {
+  if (priceAdInput.value >= 1000000) {
+    priceAdInput.setCustomValidity('Максимальное значение — 1 000 000');
+  } else {
+    priceAdInput.setCustomValidity('');
+  }
+});
+
+//соотношение кол-во комнат/мест
+capacitySelect.addEventListener('change', function () {
+  const valueOptionCapacity = this.value;
+  if (valueOptionCapacity > selectRoomNumber.value) {
+    capacitySelect.setCustomValidity('Данное значение неверно');
+  } else {
+    capacitySelect.setCustomValidity('');
+  }
+});
+
+//соотношение жилья/цена
+selectTypeHousing.addEventListener('change', function () {
+  const valueTypeHousing = this.value;
+  priceAdInput.placeholder = PriceHousing[valueTypeHousing];
+  priceAdInput.min = PriceHousing[valueTypeHousing];
+});
+
 //отправка формы
-const setUserFormSubmit = () => {
-  cardForm.addEventListener('submit', (evt) => {
-    evt.preventDefault();
-    sendData(
-      () => showSuccessMessage(),
-      () => showErrorMessage(),
-      new FormData(evt.target),
-    );
-  });
-};
+cardForm.addEventListener('submit', (evt) => {
+  evt.preventDefault();
+  sendData(
+    () => showSuccessMessage(),
+    () => showErrorMessage(),
+    new FormData(evt.target),
+  );
+});
+
+//кнопка сброса
+btnResetForm.addEventListener('click', (evt) => {
+  evt.preventDefault();
+  startupForm();
+});
 
 selectTimeIn.addEventListener('click', function () {
   selectTimeOut.value = this.value;
@@ -195,14 +182,6 @@ selectTimeOut.addEventListener('click', function () {
   selectTimeIn.value = this.value;
 });
 
-checkFieldIsValidTitle();
-checkFieldIsValidPrice();
-onChangeCapacityAndRoomNumber();
-onChangeTypeHousingAndPriceNight();
-
-
 export {
-  setUserFormSubmit,
-  clickResetBtnForm,
   setAddress
 };
