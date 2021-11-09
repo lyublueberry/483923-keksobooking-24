@@ -3,8 +3,9 @@ import {
 } from './api.js';
 
 import {
-  MainMarker,
-  resetMap
+  //MainMarker,
+  resetMap,
+  MainMarker
 } from './map.js';
 
 const priceAdInput = document.querySelector('#price');
@@ -29,6 +30,10 @@ const PriceHousing = {
   hotel: 3000,
   house: 5000,
   palace: 10000};
+
+const setAddress = (lat, lng) => {
+  inputAddress.value = `${lat}, ${lng}`;
+};
 
 //валидация заголовка объявления
 const checkFieldIsValidTitle = () => {
@@ -85,7 +90,8 @@ const clickResetBtnFormHandler = (evt) => {
   resetMap();
   photoUser.src = './img/muffin-grey.svg';
   photoHousing.src = './img/muffin-grey.svg';
-  inputAddress.value = `${MainMarker.lat}, ${MainMarker.lng}`;
+  setAddress(MainMarker.lat, MainMarker.lng);
+  //inputAddress.value = `${MainMarker.lat}, ${MainMarker.lng}`;
 };
 
 const clickResetBtnForm = () => {
@@ -95,7 +101,7 @@ const clickResetBtnForm = () => {
 const startupForm = () => {
   const successRemove = document.querySelector('.success');
   successRemove.remove();
-  inputAddress.value = `${MainMarker.lat}, ${MainMarker.lng}`;
+  setAddress(MainMarker.lat, MainMarker.lng); //inputAddress.value = `${MainMarker.lat}, ${MainMarker.lng}`;
   photoUser.src = './img/muffin-grey.svg';
   photoHousing.src = './img/muffin-grey.svg';
   resetMap();
@@ -113,40 +119,45 @@ const popupErrorBtnClickHandler = (evt) => {
   if (evt.type === 'click') {
     savedFormState();
   }
-};
-
-const popupErrorKeydownHandler = (evt) => {
-  if (evt.key === 'Escape') {
-    savedFormState();
-  }
+  document.querySelector('.error__button').removeEventListener('click', popupErrorBtnClickHandler);
 };
 
 const popupErrorMouseClickHandler = (evt) => {
   if (evt.type === 'click') {
     savedFormState();
   }
+  document.removeEventListener('click', popupErrorMouseClickHandler);
+};
+
+const popupErrorKeydownHandler = (evt) => {
+  if (evt.key === 'Escape') {
+    savedFormState();
+  }
+  document.removeEventListener('keydown', popupErrorKeydownHandler);
+
 };
 
 const showErrorMessage = () => {
   const errorModal = errorMessage.cloneNode(true);
   const btnError = errorModal.querySelector('.error__button');
   document.body.appendChild(errorModal);
-  document.addEventListener('keydown', popupErrorKeydownHandler);
   document.addEventListener('click', popupErrorMouseClickHandler);
   btnError.addEventListener('click', popupErrorBtnClickHandler);
-  btnError.removeEventListener('click', popupErrorBtnClickHandler);
+
 };
 
 const popupSuccessKeydownHandler = (evt) => {
   if (evt.key === 'Escape') {
     startupForm();
   }
+  document.removeEventListener('keydown', popupSuccessKeydownHandler);
 };
 
 const popupSuccessClickHandler = (evt) => {
   if (evt.type === 'click') {
     startupForm();
   }
+  document.removeEventListener('click', popupSuccessClickHandler);
 };
 
 const showSuccessMessage = () => {
@@ -154,6 +165,7 @@ const showSuccessMessage = () => {
   document.body.appendChild(successModal);
   document.addEventListener('keydown', popupSuccessKeydownHandler);
   document.addEventListener('click', popupSuccessClickHandler);
+  document.addEventListener('keydown', popupErrorKeydownHandler);
 };
 
 /* document.querySelector('#housing-type').addEventListener('click', (evt) => {
@@ -181,16 +193,14 @@ selectTimeOut.addEventListener('click', function () {
   selectTimeIn.value = this.value;
 });
 
-document.removeEventListener('keydown', popupSuccessKeydownHandler);
-document.removeEventListener('click', popupSuccessClickHandler);
-document.removeEventListener('keydown', popupErrorKeydownHandler);
-document.removeEventListener('click', popupErrorMouseClickHandler);
+checkFieldIsValidTitle();
+checkFieldIsValidPrice();
+onChangeCapacityAndRoomNumber();
+onChangeTypeHousingAndPriceNight();
+
 
 export {
-  checkFieldIsValidTitle,
-  checkFieldIsValidPrice,
-  onChangeCapacityAndRoomNumber,
-  onChangeTypeHousingAndPriceNight,
   setUserFormSubmit,
-  clickResetBtnForm
+  clickResetBtnForm,
+  setAddress
 };

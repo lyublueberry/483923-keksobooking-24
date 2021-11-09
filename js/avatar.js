@@ -29,7 +29,5 @@ const setHousingPhoto = () => {
 
 export {
   setHousingPhoto,
-  setAvatarPhoto,
-  previewAvatar,
-  previewHousing
+  setAvatarPhoto
 };

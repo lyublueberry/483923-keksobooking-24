@@ -1,8 +1,4 @@
 import {
-  checkFieldIsValidTitle,
-  checkFieldIsValidPrice,
-  onChangeCapacityAndRoomNumber,
-  onChangeTypeHousingAndPriceNight,
   setUserFormSubmit,
   clickResetBtnForm
 } from './forms.js';
@@ -17,10 +13,6 @@ import {
 } from './map.js';
 
 addCardsInMarker();
-checkFieldIsValidTitle();
-checkFieldIsValidPrice();
-onChangeCapacityAndRoomNumber();
-onChangeTypeHousingAndPriceNight();
 setUserFormSubmit();
 setAvatarPhoto();
 setHousingPhoto();

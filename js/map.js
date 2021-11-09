@@ -10,6 +10,8 @@ import {
   togglePageState
 } from './state-form.js';
 
+import { setAddress } from './forms.js';
+
 const ATTRIBUTION = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
 const TYLE_LAYER = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
 const ZOOM = 10;
@@ -92,13 +94,12 @@ const showAlert = (message) => {
 };
 
 const addCardsInMarker = () => {
-  inputAddress.value = `${MainMarker.lat}, ${MainMarker.lng}`;
+  setAddress(MainMarker.lat, MainMarker.lng);
   getData(
     (cards) => createMultipleMarker(cards.slice(0, MARKER_AMOUNT)),
     () => showAlert('Ошибка в получении данных с сервера!'),
   );
 };
-
 
 const resetMap = () => {
   mainPinMarker.setLatLng([LAT, LNG]).update();
