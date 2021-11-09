@@ -3,7 +3,6 @@ import {
 } from './api.js';
 
 import {
-  //MainMarker,
   resetMap,
   MainMarker
 } from './map.js';
