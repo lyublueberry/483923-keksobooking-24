@@ -575,12 +575,21 @@ fieldset {
 .ad-form__photo {
   margin-right: 10px;
   margin-bottom: 10px;
+  align-items: center;
+  display: flex;
+  text-align: center;
+  padding: 0 15px;
 
   width: 70px;
   height: 70px;
 
   background-color: #e4e4de;
   border-radius: 5px;
+}
+
+.ad-form__photo img{
+  width: 40px;
+  height: 44px;
 }
 
 .ad-form__element--submit {
@@ -1027,4 +1036,19 @@ fieldset {
 
 .hidden {
   display: none;
+}
+
+/*Сообщение об ошибке в получении данных с сервера*/
+.alert-error{
+  z-index: 410;
+  position:absolute;
+  width: 1200px;
+  top: 10%;
+  bottom:auto;
+  padding: 10px 3px;
+  font-size: 25px;
+  font-weight: bold;
+  text-align: center;
+  background-color: rgba(235, 110, 110, 0.7);
+  color: #070707;
 }

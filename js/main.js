@@ -1,23 +1,12 @@
-import {createCards} from './generating-template-element.js';
-import {setInactiveState} from './state-active-inactive.js';
-import {setActiveState} from './state-active-inactive.js';
-import {checkFieldIsValidTitle} from './working-with-forms.js';
-import {checkFieldIsValidPrice} from './working-with-forms.js';
-import {onChangeCapacityAndRoomNumber} from './working-with-forms.js';
-import {onChangeTypeHousingAndPriceNight} from './working-with-forms.js';
-import {onChangeTimeIn} from './working-with-forms.js';
-import {onChangeTimeOut} from './working-with-forms.js';
-import {serverWork} from './work-with-server.js';
-import {setMarkerSingleAndList} from './work-with-map.js';
+import {
+  setAvatarPhoto,
+  setHousingPhoto
+} from './avatar.js';
 
-createCards();
-setInactiveState();
-setActiveState();
-checkFieldIsValidTitle();
-checkFieldIsValidPrice();
-onChangeCapacityAndRoomNumber();
-onChangeTypeHousingAndPriceNight();
-onChangeTimeIn();
-onChangeTimeOut();
-serverWork(console.log, console.error);
-setMarkerSingleAndList();
+import {
+  addCardsInMarker
+} from './map.js';
+
+addCardsInMarker();
+setAvatarPhoto();
+setHousingPhoto();
