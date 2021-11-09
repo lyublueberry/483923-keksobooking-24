@@ -18,7 +18,7 @@ const selectTimeOut = document.querySelector('#timeout');
 const cardForm = document.querySelector('.ad-form');
 const inputAddress = document.querySelector('#address');
 const errorMessage = document.querySelector('#error').content;
-const errorSuccess = document.querySelector('#success').content;
+const successMessage = document.querySelector('#success').content;
 const photoUser = document.querySelector('.setup-user-pic');
 const photoHousing = document.querySelector('.setup-housing-pic');
 const btnResetForm = document.querySelector('.ad-form__reset');
@@ -31,6 +31,8 @@ const PriceHousing = {
   house: 5000,
   palace: 10000};
 
+
+//первоначальный адрес
 const setAddress = (lat, lng) => {
   inputAddress.value = `${lat}, ${lng}`;
 };
@@ -82,39 +84,32 @@ const onChangeTypeHousingAndPriceNight = () => {
   });
 };
 
-//кнопка сброса
-const clickResetBtnFormHandler = (evt) => {
-  evt.preventDefault();
-  cardForm.reset();
-  filtersForm.reset();
+//устанавливаем начальные значения
+const startupForm = () => {
   resetMap();
+  filtersForm.reset();
+  cardForm.reset();
   photoUser.src = './img/muffin-grey.svg';
   photoHousing.src = './img/muffin-grey.svg';
   setAddress(MainMarker.lat, MainMarker.lng);
-  //inputAddress.value = `${MainMarker.lat}, ${MainMarker.lng}`;
 };
 
+//кнопка сброса
 const clickResetBtnForm = () => {
-  btnResetForm.addEventListener('click', clickResetBtnFormHandler);
+  btnResetForm.addEventListener('click', (evt) => {
+    evt.preventDefault();
+    startupForm();
+  });
 };
 
-const startupForm = () => {
-  const successRemove = document.querySelector('.success');
-  successRemove.remove();
-  setAddress(MainMarker.lat, MainMarker.lng); //inputAddress.value = `${MainMarker.lat}, ${MainMarker.lng}`;
-  photoUser.src = './img/muffin-grey.svg';
-  photoHousing.src = './img/muffin-grey.svg';
-  resetMap();
-  cardForm.reset();
-};
-
+//убираем окно и сохраняем заполненность формы
 const savedFormState = (evt) => {
   const successError = document.querySelector('.error');
   evt.preventDefault();
   successError.remove();
 };
 
-//сообщение об успехе/ошибке отправки
+//кликнули на кнопку ОШИБКА
 const popupErrorBtnClickHandler = (evt) => {
   if (evt.type === 'click') {
     savedFormState();
@@ -122,56 +117,63 @@ const popupErrorBtnClickHandler = (evt) => {
   document.querySelector('.error__button').removeEventListener('click', popupErrorBtnClickHandler);
 };
 
+//кликнули в произвол обл ОШИБКА
 const popupErrorMouseClickHandler = (evt) => {
   if (evt.type === 'click') {
+    document.querySelector('.success').remove();
     savedFormState();
   }
   document.removeEventListener('click', popupErrorMouseClickHandler);
 };
 
+//нажали кнопу esc ОШИБКА
 const popupErrorKeydownHandler = (evt) => {
   if (evt.key === 'Escape') {
+    document.querySelector('.success').remove();
     savedFormState();
   }
   document.removeEventListener('keydown', popupErrorKeydownHandler);
-
 };
 
-const showErrorMessage = () => {
-  const errorModal = errorMessage.cloneNode(true);
-  const btnError = errorModal.querySelector('.error__button');
-  document.body.appendChild(errorModal);
-  document.addEventListener('click', popupErrorMouseClickHandler);
-  btnError.addEventListener('click', popupErrorBtnClickHandler);
-
-};
-
+//нажали клавишу esc УСПЕХ
 const popupSuccessKeydownHandler = (evt) => {
   if (evt.key === 'Escape') {
+    document.querySelector('.success').remove();
     startupForm();
   }
   document.removeEventListener('keydown', popupSuccessKeydownHandler);
 };
 
+//кликнули в произвол обл мышью УСПЕХ
 const popupSuccessClickHandler = (evt) => {
+  document.querySelector('.success').remove();
   if (evt.type === 'click') {
     startupForm();
   }
   document.removeEventListener('click', popupSuccessClickHandler);
 };
 
+//показали сообщение об успехе
 const showSuccessMessage = () => {
-  const successModal = errorSuccess.cloneNode(true);
+  const successModal = successMessage.cloneNode(true);
   document.body.appendChild(successModal);
-  document.addEventListener('keydown', popupSuccessKeydownHandler);
-  document.addEventListener('click', popupSuccessClickHandler);
-  document.addEventListener('keydown', popupErrorKeydownHandler);
+  document.addEventListener('keydown', popupSuccessKeydownHandler); //esc
+  document.addEventListener('click', popupSuccessClickHandler); //произвол обл
+};
+
+//показали сообщение об ошибке
+const showErrorMessage = () => {
+  const errorModal = errorMessage.cloneNode(true);
+  const btnError = errorModal.querySelector('.error__button');
+  document.body.appendChild(errorModal);
+  document.addEventListener('click', popupErrorMouseClickHandler); //произвол обл
+  btnError.addEventListener('click', popupErrorBtnClickHandler); //по кнопке
+  document.addEventListener('keydown', popupErrorKeydownHandler); //esc
 };
 
 /* document.querySelector('#housing-type').addEventListener('click', (evt) => {
 
 }); */
-
 
 //отправка формы
 const setUserFormSubmit = () => {
