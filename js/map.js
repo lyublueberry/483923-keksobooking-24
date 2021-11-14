@@ -63,7 +63,7 @@ mainPinMarker.addTo(map);
 
 //двигаем по карте и получаем координаты
 mainPinMarker.on('moveend', (evt) => {
-  const {lat, lng } = evt.target.getLatLng();
+  const {lat, lng} = evt.target.getLatLng();
   inputAddress.value = `${lat.toFixed(FIX_NUMBER)}, ${lng.toFixed(FIX_NUMBER)}`;
 });
 
@@ -96,6 +96,7 @@ const showAlert = (message) => {
   }, SHOW_ALERT_TIME);
 };
 
+//фильтруем
 const isSimilarSelectedFeaturesValues = (card) => {
   const selectedFeatures = filtersForm.querySelectorAll('.map__filters input[name=features]:checked');
   const selectedFeaturesValues = Array.from(selectedFeatures).map((cb) => cb.value);
@@ -107,52 +108,41 @@ const isSimilarSelectedHousingTypeValues = (card) => {
   const selectedHousingType = filtersForm.querySelector('#housing-type');
   selectedHousingType.addEventListener('change', function () {
     const selectedHousingTypeValue = this.value;
-    if (selectedHousingTypeValue === 'any') {
+    if ((selectedHousingTypeValue === 'any') || (card.offer.type === selectedHousingTypeValue)) {
       return true;
-    } else if (card.offer.type === undefined) {
-      return false;
     } else {
-      return card.offer.type === selectedHousingTypeValue;
+      return card.offer.type === undefined;
     }
   });
 };
 
 const isSimilarSelectedHousingPriceValues = (card) => {
   const selectedHousingPriceValue = this.value;
-  if ((selectedHousingPriceValue === 'middle') && (card.offer.price <= 50000) || (card.offer.price >= 10000)) {
+  if (((selectedHousingPriceValue === 'middle') && ((card.offer.price <= 50000) || (card.offer.price >= 10000))) ||
+    ((selectedHousingPriceValue === 'low') && (card.offer.price <= 10000)) ||
+    ((selectedHousingPriceValue === 'high') && (card.offer.price >= 50000)) ||
+    (selectedHousingPriceValue === 'any')) {
     return true;
-  } else if ((selectedHousingPriceValue === 'low') && (card.offer.price <= 10000)) {
-    return true;
-  } else if ((selectedHousingPriceValue === 'high') && (card.offer.price >= 50000)) {
-    return true;
-  } else if (selectedHousingPriceValue === 'any') {
-    return true;
-  } else if (card.offer.price === undefined) {
-    return false;
+  } else {
+    return card.offer.price === undefined;
   }
 };
 
 const isSimilarSelectedHousingRoomValues = (card) => {
   const selectedHousingRoomValue = this.value;
-  if (selectedHousingRoomValue === 'any') {
+  if ((selectedHousingRoomValue === 'any') || (card.offer.rooms === selectedHousingRoomValue)) {
     return true;
-  } else if (card.offer.rooms === undefined) {
-    return false;
   } else {
-    const intersection = card.offer.rooms === (selectedHousingRoomValue);
-    return intersection;
+    return card.offer.rooms === undefined;
   }
 };
 
 const isSimilarSelectedHousingGuestsValues = (card) => {
   const selectedHousingGuestsValue = this.value;
-  if (selectedHousingGuestsValue === 'any') {
+  if ((selectedHousingGuestsValue === 'any') || (card.offer.guests === selectedHousingGuestsValue)) {
     return true;
-  } else if (card.offer.guests === undefined) {
-    return false;
   } else {
-    const intersection = card.offer.guests === selectedHousingGuestsValue;
-    return intersection;
+    return card.offer.guests === undefined;
   }
 };
 
@@ -160,12 +150,13 @@ const isSimilarSelectedHousingGuestsValues = (card) => {
 
 const filtersMap = (cards) => {
   filtersForm.addEventListener('change', () => {
-    const newCards = cards.filter((card) => {
-      if ((isSimilarSelectedFeaturesValues(card)) && (isSimilarSelectedHousingTypeValues(card)) &&
-        (isSimilarSelectedHousingRoomValues(card)) && (isSimilarSelectedHousingGuestsValues(card)) &&
-        (isSimilarSelectedHousingGuestsValues(card)) && (isSimilarSelectedHousingPriceValues(card))) {
-        return newCards;
-      }
+    cards.filter((card) => {
+      ((isSimilarSelectedFeaturesValues(card)) &&
+        (isSimilarSelectedHousingTypeValues(card)) &&
+        (isSimilarSelectedHousingRoomValues(card)) &&
+        (isSimilarSelectedHousingGuestsValues(card)) &&
+        (isSimilarSelectedHousingGuestsValues(card)) &&
+        (isSimilarSelectedHousingPriceValues(card)));
     });
   });
 };
