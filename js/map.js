@@ -10,7 +10,9 @@ import {
   togglePageState
 } from './state-form.js';
 
-import { setAddress } from './forms.js';
+import {
+  setAddress
+} from './forms.js';
 
 const ATTRIBUTION = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
 const TYLE_LAYER = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
@@ -25,6 +27,7 @@ const FIX_NUMBER = 5;
 const MARKER_AMOUNT = 10;
 const SHOW_ALERT_TIME = 5000;
 const inputAddress = document.querySelector('#address');
+const filtersForm = document.querySelector('.map__filters');
 
 
 //главная красная метка
@@ -60,7 +63,7 @@ mainPinMarker.addTo(map);
 
 //двигаем по карте и получаем координаты
 mainPinMarker.on('moveend', (evt) => {
-  const {lat, lng} = evt.target.getLatLng();
+  const {lat, lng } = evt.target.getLatLng();
   inputAddress.value = `${lat.toFixed(FIX_NUMBER)}, ${lng.toFixed(FIX_NUMBER)}`;
 });
 
@@ -93,10 +96,87 @@ const showAlert = (message) => {
   }, SHOW_ALERT_TIME);
 };
 
+const isSimilarSelectedFeaturesValues = (card) => {
+  const selectedFeatures = filtersForm.querySelectorAll('.map__filters input[name=features]:checked');
+  const selectedFeaturesValues = Array.from(selectedFeatures).map((cb) => cb.value);
+  const featuresData = card.offer.features;
+  return featuresData.every((item) => item === selectedFeaturesValues[item]);
+};
+
+const isSimilarSelectedHousingTypeValues = (card) => {
+  const selectedHousingType = filtersForm.querySelector('#housing-type');
+  selectedHousingType.addEventListener('change', function () {
+    const selectedHousingTypeValue = this.value;
+    if (selectedHousingTypeValue === 'any') {
+      return true;
+    } else if (card.offer.type === undefined) {
+      return false;
+    } else {
+      return card.offer.type === selectedHousingTypeValue;
+    }
+  });
+};
+
+const isSimilarSelectedHousingPriceValues = (card) => {
+  const selectedHousingPriceValue = this.value;
+  if ((selectedHousingPriceValue === 'middle') && (card.offer.price <= 50000) || (card.offer.price >= 10000)) {
+    return true;
+  } else if ((selectedHousingPriceValue === 'low') && (card.offer.price <= 10000)) {
+    return true;
+  } else if ((selectedHousingPriceValue === 'high') && (card.offer.price >= 50000)) {
+    return true;
+  } else if (selectedHousingPriceValue === 'any') {
+    return true;
+  } else if (card.offer.price === undefined) {
+    return false;
+  }
+};
+
+const isSimilarSelectedHousingRoomValues = (card) => {
+  const selectedHousingRoomValue = this.value;
+  if (selectedHousingRoomValue === 'any') {
+    return true;
+  } else if (card.offer.rooms === undefined) {
+    return false;
+  } else {
+    const intersection = card.offer.rooms === (selectedHousingRoomValue);
+    return intersection;
+  }
+};
+
+const isSimilarSelectedHousingGuestsValues = (card) => {
+  const selectedHousingGuestsValue = this.value;
+  if (selectedHousingGuestsValue === 'any') {
+    return true;
+  } else if (card.offer.guests === undefined) {
+    return false;
+  } else {
+    const intersection = card.offer.guests === selectedHousingGuestsValue;
+    return intersection;
+  }
+};
+
+/*фильтр массива, для каждого элемента вызываются функции, в каждую передается текущий элемент*/
+
+const filtersMap = (cards) => {
+  filtersForm.addEventListener('change', () => {
+    const newCards = cards.filter((card) => {
+      if ((isSimilarSelectedFeaturesValues(card)) && (isSimilarSelectedHousingTypeValues(card)) &&
+        (isSimilarSelectedHousingRoomValues(card)) && (isSimilarSelectedHousingGuestsValues(card)) &&
+        (isSimilarSelectedHousingGuestsValues(card)) && (isSimilarSelectedHousingPriceValues(card))) {
+        return newCards;
+      }
+    });
+  });
+};
+
 const addCardsInMarker = () => {
   setAddress(MainMarker.lat, MainMarker.lng);
   getData(
-    (cards) => createMultipleMarker(cards.slice(0, MARKER_AMOUNT)),
+    (cards) => {
+      createMultipleMarker(cards.slice(0, MARKER_AMOUNT));
+      filtersMap(cards);
+    },
     () => showAlert('Ошибка в получении данных с сервера!'),
   );
 };

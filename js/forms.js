@@ -23,12 +23,24 @@ const photoHousing = document.querySelector('.setup-housing-pic');
 const btnResetForm = document.querySelector('.ad-form__reset');
 const filtersForm = document.querySelector('.map__filters');
 
+
 const PriceHousing = {
   bungalow: 0,
   flat: 1000,
   hotel: 3000,
   house: 5000,
   palace: 10000};
+
+/* const housingType = document.querySelector('#housing-type');
+const housingPrice = document.querySelector('#housing-price');
+const housingRooms = document.querySelector('#housing-rooms');
+const housingGuests = document.querySelector('#housing-guests');
+const filterWifi = document.querySelector('#filter-wifi');
+const filterDishwasher = document.querySelector('#filter-dishwasher');
+const filterParking = document.querySelector('#filter-parking');
+const filterWasher = document.querySelector('#filter-washer');
+const filterElevator = document.querySelector('#filter-elevator');
+const filterConditioner = document.querySelector('#filter-conditioner'); */
 
 //первоначальный адрес
 const setAddress = (lat, lng) => {
@@ -113,10 +125,6 @@ const showErrorMessage = () => {
   btnError.addEventListener('click', popupErrorBtnClickHandler); //по кнопке
   document.addEventListener('keydown', popupErrorKeydownHandler); //esc
 };
-
-/* document.querySelector('#housing-type').addEventListener('click', (evt) => {
-
-}); */
 
 //валидация заголовка объявления
 titleAdInput.addEventListener('invalid', () => {
