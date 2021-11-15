@@ -101,49 +101,32 @@ const isSimilarSelectedFeaturesValues = (card) => {
   const selectedFeatures = filtersForm.querySelectorAll('.map__filters input[name=features]:checked');
   const selectedFeaturesValues = Array.from(selectedFeatures).map((cb) => cb.value);
   const featuresData = card.offer.features;
-  return featuresData.every((item) => item === selectedFeaturesValues[item]);
+  return featuresData.length === selectedFeaturesValues.length && featuresData.every((item, index) => item === selectedFeaturesValues[index]);
+  //return featuresData.sort().join() === selectedFeaturesValues.sort().join();
 };
 
 const isSimilarSelectedHousingTypeValues = (card) => {
-  const selectedHousingType = filtersForm.querySelector('#housing-type');
-  selectedHousingType.addEventListener('change', function () {
-    const selectedHousingTypeValue = this.value;
-    if ((selectedHousingTypeValue === 'any') || (card.offer.type === selectedHousingTypeValue)) {
-      return true;
-    } else {
-      return card.offer.type === undefined;
-    }
-  });
+  const selectedHousingTypeValue = this.value;
+  return selectedHousingTypeValue === 'any' || card.offer.type === selectedHousingTypeValue || !card.offer.type;
 };
 
 const isSimilarSelectedHousingPriceValues = (card) => {
   const selectedHousingPriceValue = this.value;
-  if (((selectedHousingPriceValue === 'middle') && ((card.offer.price <= 50000) || (card.offer.price >= 10000))) ||
+  return (((selectedHousingPriceValue === 'middle') && ((card.offer.price <= 50000) ||
+      (card.offer.price >= 10000))) ||
     ((selectedHousingPriceValue === 'low') && (card.offer.price <= 10000)) ||
     ((selectedHousingPriceValue === 'high') && (card.offer.price >= 50000)) ||
-    (selectedHousingPriceValue === 'any')) {
-    return true;
-  } else {
-    return card.offer.price === undefined;
-  }
+    (selectedHousingPriceValue === 'any')) || !card.offer.price;
 };
 
 const isSimilarSelectedHousingRoomValues = (card) => {
   const selectedHousingRoomValue = this.value;
-  if ((selectedHousingRoomValue === 'any') || (card.offer.rooms === selectedHousingRoomValue)) {
-    return true;
-  } else {
-    return card.offer.rooms === undefined;
-  }
+  return selectedHousingRoomValue === 'any' || card.offer.rooms === selectedHousingRoomValue || !card.offer.rooms;
 };
 
 const isSimilarSelectedHousingGuestsValues = (card) => {
   const selectedHousingGuestsValue = this.value;
-  if ((selectedHousingGuestsValue === 'any') || (card.offer.guests === selectedHousingGuestsValue)) {
-    return true;
-  } else {
-    return card.offer.guests === undefined;
-  }
+  return selectedHousingGuestsValue === 'any' || card.offer.guests === selectedHousingGuestsValue || !card.offer.guests;
 };
 
 /*фильтр массива, для каждого элемента вызываются функции, в каждую передается текущий элемент*/
