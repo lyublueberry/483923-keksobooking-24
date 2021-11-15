@@ -31,17 +31,6 @@ const PriceHousing = {
   house: 5000,
   palace: 10000};
 
-/* const housingType = document.querySelector('#housing-type');
-const housingPrice = document.querySelector('#housing-price');
-const housingRooms = document.querySelector('#housing-rooms');
-const housingGuests = document.querySelector('#housing-guests');
-const filterWifi = document.querySelector('#filter-wifi');
-const filterDishwasher = document.querySelector('#filter-dishwasher');
-const filterParking = document.querySelector('#filter-parking');
-const filterWasher = document.querySelector('#filter-washer');
-const filterElevator = document.querySelector('#filter-elevator');
-const filterConditioner = document.querySelector('#filter-conditioner'); */
-
 //первоначальный адрес
 const setAddress = (lat, lng) => {
   inputAddress.value = `${lat}, ${lng}`;
