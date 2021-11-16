@@ -71,7 +71,7 @@ mainPinMarker.addTo(map);
 
 //двигаем по карте и получаем координаты
 mainPinMarker.on('moveend', (evt) => {
-  const {lat, lng} = evt.target.getLatLng();
+  const {lat,lng} = evt.target.getLatLng();
   inputAddress.value = `${lat.toFixed(FIX_NUMBER)}, ${lng.toFixed(FIX_NUMBER)}`;
 });
 
@@ -82,6 +82,7 @@ L.tileLayer(TYLE_LAYER, {
 const multipleMarker = L.layerGroup().addTo(map);
 
 const createMultipleMarker = (cards) => {
+  multipleMarker.clearLayers();
   cards.forEach((cardsItem) => {
     const icon = L.icon(MULTIPLE_MARKER);
     const marker = L.marker({
@@ -106,22 +107,18 @@ const showAlert = (message) => {
 
 //фильтруем
 const checkFeatures = (card) => {
-  const selectedFeatures = filtersForm.querySelectorAll('.map__filters input[name=features]:checked');
+  const selectedFeatures = filtersForm.querySelectorAll('input[name=features]:checked');
   const selectedFeaturesValues = Array.from(selectedFeatures).map((cb) => cb.value).sort();
-  if (card.offer.features) {
-    return card.offer.features.every((item) => selectedFeaturesValues.includes(item));
-  } else {
-    return false;
-  }
+  return !selectedFeaturesValues.length || !!card.offer.features && selectedFeaturesValues.every((item) => card.offer.features.includes(item));
 };
 
 const checkType = (card) => {
-  const selectedHousingTypeValue =  housingType.value;
+  const selectedHousingTypeValue = housingType.value;
   return selectedHousingTypeValue === 'any' || card.offer.type === selectedHousingTypeValue || !card.offer.type;
 };
 
 const checkPrice = (card) => {
-  const selectedHousingPriceValue =  housingPrice.value;
+  const selectedHousingPriceValue = housingPrice.value;
   return ((selectedHousingPriceValue === 'middle' && (card.offer.price <= 50000 ||
       (card.offer.price >= 10000))) ||
     (selectedHousingPriceValue === 'low' && card.offer.price <= 10000) ||
@@ -135,19 +132,16 @@ const checkRoom = (card) => {
 };
 
 const checkGuests = (card) => {
-  const selectedHousingGuestsValue =  housingGuests.value;
+  const selectedHousingGuestsValue = housingGuests.value;
   return selectedHousingGuestsValue === 'any' || String(card.offer.guests) === selectedHousingGuestsValue || !card.offer.guests;
 };
 
 /*фильтр массива, для каждого элемента вызываются функции, в каждую передается текущий элемент*/
 
 const filtersMap = (cards) => {
-  document.querySelector('.map__filters').addEventListener('change', () => {
-    createMultipleMarker(cards.filter((card) => {
-      checkFeatures(card) && checkType(card) && checkRoom(card) &&
-        checkGuests(card) && checkPrice(card);
-    }).slice(0, MARKER_AMOUNT));
-  });
+  filtersForm.addEventListener('change', debounce(() => {
+    createMultipleMarker(cards.filter((card) => checkFeatures(card) && checkType(card) && checkRoom(card) && checkGuests(card) && checkPrice(card)).slice(0, MARKER_AMOUNT));
+  }));
 };
 
 const addCardsInMarker = () => {
@@ -155,7 +149,7 @@ const addCardsInMarker = () => {
   getData(
     (cards) => {
       createMultipleMarker(cards.slice(0, MARKER_AMOUNT));
-      debounce(() => filtersMap(cards));
+      filtersMap(cards);
     },
     () => showAlert('Ошибка в получении данных с сервера!'),
   );
