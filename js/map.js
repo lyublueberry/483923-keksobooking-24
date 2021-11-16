@@ -14,6 +14,11 @@ import {
   setAddress
 } from './forms.js';
 
+import {
+  debounce
+} from './utils/debounce.js';
+
+
 const ATTRIBUTION = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
 const TYLE_LAYER = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
 const ZOOM = 10;
@@ -28,8 +33,6 @@ const MARKER_AMOUNT = 10;
 const SHOW_ALERT_TIME = 5000;
 const inputAddress = document.querySelector('#address');
 const filtersForm = document.querySelector('.map__filters');
-const RERENDER_DELAY = 500;
-
 
 //главная красная метка
 const MAIN_MARKER_ICON = {
@@ -102,7 +105,7 @@ const checkFeatures = (card) => {
   const selectedFeatures = filtersForm.querySelectorAll('.map__filters input[name=features]:checked');
   const selectedFeaturesValues = Array.from(selectedFeatures).map((cb) => cb.value).sort();
   if (card.offer.features) {
-    return card.offer.features.some((item) => selectedFeaturesValues.includes(item));
+    return card.offer.features.every((item) => selectedFeaturesValues.includes(item));
   } else {
     return false;
   }
@@ -148,7 +151,7 @@ const addCardsInMarker = () => {
   getData(
     (cards) => {
       createMultipleMarker(cards.slice(0, MARKER_AMOUNT));
-      _.debounce(filtersMap(cards), RERENDER_DELAY);
+      debounce(() => filtersMap(cards));
     },
     () => showAlert('Ошибка в получении данных с сервера!'),
   );
