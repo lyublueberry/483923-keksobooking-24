@@ -28,6 +28,7 @@ const MARKER_AMOUNT = 10;
 const SHOW_ALERT_TIME = 5000;
 const inputAddress = document.querySelector('#address');
 const filtersForm = document.querySelector('.map__filters');
+const RERENDER_DELAY = 500;
 
 
 //главная красная метка
@@ -147,7 +148,7 @@ const addCardsInMarker = () => {
   getData(
     (cards) => {
       createMultipleMarker(cards.slice(0, MARKER_AMOUNT));
-      filtersMap(cards);
+      _.debounce(filtersMap(cards), RERENDER_DELAY);
     },
     () => showAlert('Ошибка в получении данных с сервера!'),
   );
