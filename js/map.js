@@ -33,6 +33,10 @@ const MARKER_AMOUNT = 10;
 const SHOW_ALERT_TIME = 5000;
 const inputAddress = document.querySelector('#address');
 const filtersForm = document.querySelector('.map__filters');
+const housingGuests = filtersForm.querySelector('#housing-guests');
+const housingType = filtersForm.querySelector('#housing-type');
+const housingRoom = filtersForm.querySelector('#housing-rooms');
+const housingPrice = filtersForm.querySelector('#housing-price');
 
 //главная красная метка
 const MAIN_MARKER_ICON = {
@@ -112,12 +116,12 @@ const checkFeatures = (card) => {
 };
 
 const checkType = (card) => {
-  const selectedHousingTypeValue = document.querySelector('#housing-type option:checked').value;
+  const selectedHousingTypeValue =  housingType.value;
   return selectedHousingTypeValue === 'any' || card.offer.type === selectedHousingTypeValue || !card.offer.type;
 };
 
 const checkPrice = (card) => {
-  const selectedHousingPriceValue = filtersForm.querySelector('#housing-price option:checked').value;
+  const selectedHousingPriceValue =  housingPrice.value;
   return ((selectedHousingPriceValue === 'middle' && (card.offer.price <= 50000 ||
       (card.offer.price >= 10000))) ||
     (selectedHousingPriceValue === 'low' && card.offer.price <= 10000) ||
@@ -126,12 +130,12 @@ const checkPrice = (card) => {
 };
 
 const checkRoom = (card) => {
-  const selectedHousingRoomValue = document.querySelector('#housing-rooms option:checked'.value);
+  const selectedHousingRoomValue = housingRoom.value;
   return selectedHousingRoomValue === 'any' || String(card.offer.rooms) === selectedHousingRoomValue || !card.offer.rooms;
 };
 
 const checkGuests = (card) => {
-  const selectedHousingGuestsValue = document.querySelector('#housing-guests option:checked').value;
+  const selectedHousingGuestsValue =  housingGuests.value;
   return selectedHousingGuestsValue === 'any' || String(card.offer.guests) === selectedHousingGuestsValue || !card.offer.guests;
 };
 
