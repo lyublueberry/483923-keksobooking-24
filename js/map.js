@@ -41,13 +41,11 @@ const MAIN_MARKER_ICON = {
 const MULTIPLE_MARKER = {
   iconUrl: URL_MULTIPLE_MARKER,
   iconSize: [SIZE_MULTIPLE_MARKER, SIZE_MULTIPLE_MARKER],
-  iconAnchor: [SIZE_MULTIPLE_MARKER / 2, SIZE_MULTIPLE_MARKER / 2]
-};
+  iconAnchor: [SIZE_MULTIPLE_MARKER / 2, SIZE_MULTIPLE_MARKER / 2]};
 
 const MainMarker = {
   lat: LAT,
-  lng: LNG
-};
+  lng: LNG};
 
 const map = L.map('map-canvas').on('load', () => {
   togglePageState(true);
@@ -65,10 +63,7 @@ mainPinMarker.addTo(map);
 
 //двигаем по карте и получаем координаты
 mainPinMarker.on('moveend', (evt) => {
-  const {
-    lat,
-    lng
-  } = evt.target.getLatLng();
+  const {lat, lng} = evt.target.getLatLng();
   inputAddress.value = `${lat.toFixed(FIX_NUMBER)}, ${lng.toFixed(FIX_NUMBER)}`;
 });
 
@@ -104,18 +99,21 @@ const showAlert = (message) => {
 //фильтруем
 const checkFeatures = (card) => {
   const selectedFeatures = filtersForm.querySelectorAll('.map__filters input[name=features]:checked');
-  const selectedFeaturesValues = Array.from(selectedFeatures).map((cb) => cb.value);
-  return card.offer.features && card.offer.features.length === selectedFeaturesValues.length && card.offer.features.every((item, index) => item === selectedFeaturesValues[index]);
+  const selectedFeaturesValues = Array.from(selectedFeatures).map((cb) => cb.value).sort();
+  if (card.offer.features) {
+    return card.offer.features.some((item) => selectedFeaturesValues.includes(item));
+  } else {
+    return false;
+  }
 };
 
 const checkType = (card) => {
-  const selectedHousingTypeValue = document.querySelector('#housing-type').value;
-  console.log(selectedHousingTypeValue);
+  const selectedHousingTypeValue = document.querySelector('#housing-type option:checked').value;
   return selectedHousingTypeValue === 'any' || card.offer.type === selectedHousingTypeValue || !card.offer.type;
 };
 
 const checkPrice = (card) => {
-  const selectedHousingPriceValue = filtersForm.querySelector('#housing-price').value;
+  const selectedHousingPriceValue = filtersForm.querySelector('#housing-price option:checked').value;
   return ((selectedHousingPriceValue === 'middle' && (card.offer.price <= 50000 ||
       (card.offer.price >= 10000))) ||
     (selectedHousingPriceValue === 'low' && card.offer.price <= 10000) ||
@@ -124,22 +122,22 @@ const checkPrice = (card) => {
 };
 
 const checkRoom = (card) => {
-  const selectedHousingRoomValue = document.querySelector('#housing-rooms').value;
-  return selectedHousingRoomValue === 'any' || card.offer.rooms === selectedHousingRoomValue || !card.offer.rooms;
+  const selectedHousingRoomValue = document.querySelector('#housing-rooms option:checked'.value);
+  return selectedHousingRoomValue === 'any' || String(card.offer.rooms) === selectedHousingRoomValue || !card.offer.rooms;
 };
 
 const checkGuests = (card) => {
-  const selectedHousingGuestsValue = document.querySelector('#housing-guests').value;
-  return selectedHousingGuestsValue === 'any' || card.offer.guests === selectedHousingGuestsValue || !card.offer.guests;
+  const selectedHousingGuestsValue = document.querySelector('#housing-guests option:checked').value;
+  return selectedHousingGuestsValue === 'any' || String(card.offer.guests) === selectedHousingGuestsValue || !card.offer.guests;
 };
 
 /*фильтр массива, для каждого элемента вызываются функции, в каждую передается текущий элемент*/
 
 const filtersMap = (cards) => {
-  filtersForm.addEventListener('change', () => {
+  document.querySelector('.map__filters').addEventListener('change', () => {
     createMultipleMarker(cards.filter((card) => {
-      checkFeatures(card) && checkType(card) && checkRoom(card)
-      && checkGuests(card) && checkGuests(card) && checkPrice(card);
+      checkFeatures(card) && checkType(card) && checkRoom(card) &&
+        checkGuests(card) && checkPrice(card);
     }).slice(0, MARKER_AMOUNT));
   });
 };
