@@ -23,6 +23,7 @@ const photoHousing = document.querySelector('.setup-housing-pic');
 const btnResetForm = document.querySelector('.ad-form__reset');
 const filtersForm = document.querySelector('.map__filters');
 
+
 const PriceHousing = {
   bungalow: 0,
   flat: 1000,
@@ -113,10 +114,6 @@ const showErrorMessage = () => {
   btnError.addEventListener('click', popupErrorBtnClickHandler); //по кнопке
   document.addEventListener('keydown', popupErrorKeydownHandler); //esc
 };
-
-/* document.querySelector('#housing-type').addEventListener('click', (evt) => {
-
-}); */
 
 //валидация заголовка объявления
 titleAdInput.addEventListener('invalid', () => {
