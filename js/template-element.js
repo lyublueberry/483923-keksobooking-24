@@ -5,29 +5,29 @@ const OfferTypes = {
   HOUSE: 'Дом',
   PALACE: 'Дворец'};
 
-const similarTemplateAd = document.querySelector('#card').content.querySelector('.popup'); //здесь используется поиск по # т.к. нет класса
+const similarTemplateAdElement = document.querySelector('#card').content.querySelector('.popup'); //здесь используется поиск по # т.к. нет класса
 
 const createCard = (card) => {
-  const adElement = similarTemplateAd.cloneNode(true);
-  const title = adElement.querySelector('.popup__title');
-  const address = adElement.querySelector('.popup__text--address');
-  const price = adElement.querySelector('.popup__text--price');
-  const type = adElement.querySelector('.popup__type');
-  const capacity = adElement.querySelector('.popup__text--capacity');
-  const time = adElement.querySelector('.popup__text--time');
-  const avatar = adElement.querySelector('.popup__avatar');
-  const description = adElement.querySelector('.popup__description');
-  const featureList = adElement.querySelector('.popup__features');
-  const photos = adElement.querySelector('.popup__photos');
+  const adElement = similarTemplateAdElement.cloneNode(true);
+  const titleElement = adElement.querySelector('.popup__title');
+  const addressElement = adElement.querySelector('.popup__text--address');
+  const priceElement = adElement.querySelector('.popup__text--price');
+  const typeElement = adElement.querySelector('.popup__type');
+  const capacityElement = adElement.querySelector('.popup__text--capacity');
+  const timeElement = adElement.querySelector('.popup__text--time');
+  const avatarElement = adElement.querySelector('.popup__avatar');
+  const descriptionElement = adElement.querySelector('.popup__description');
+  const featureListElement = adElement.querySelector('.popup__features');
+  const photosElement = adElement.querySelector('.popup__photos');
 
-  card.offer.title ? title.textContent = card.offer.title : title.classList.add('hidden');
-  card.offer.address ? address.textContent = card.offer.address : address.classList.add('hidden');
-  card.offer.price ? price.textContent = `${card.offer.price} ₽/ночь` : price.classList.add('hidden');
-  card.offer.type ? type.textContent = OfferTypes[card.offer.type] : type.classList.add('hidden');
-  card.offer.description ? description.textContent = card.offer.description : description.classList.add('hidden');
-  (card.offer.rooms && card.offer.guests) ? capacity.textContent = `${card.offer.rooms} комнаты для ${card.offer.guests} гостей`: capacity.classList.add('hidden');
-  (card.offer.checkin && card.offer.checkout) ? time.textContent = `Заезд после ${card.offer.checkin}, выезд до ${card.offer.checkout}`: time.classList.add('hidden');
-  card.author.avatar ? avatar.src = card.author.avatar : avatar.classList.add('hidden');
+  card.offer.title ? titleElement.textContent = card.offer.title : titleElement.classList.add('hidden');
+  card.offer.address ? addressElement.textContent = card.offer.address : addressElement.classList.add('hidden');
+  card.offer.price ? priceElement.textContent = `${card.offer.price} ₽/ночь` : priceElement.classList.add('hidden');
+  card.offer.type ? typeElement.textContent = OfferTypes[card.offer.type] : typeElement.classList.add('hidden');
+  card.offer.description ? descriptionElement.textContent = card.offer.description : descriptionElement.classList.add('hidden');
+  (card.offer.rooms && card.offer.guests) ? capacityElement.textContent = `${card.offer.rooms} комнаты для ${card.offer.guests} гостей`: capacityElement.classList.add('hidden');
+  (card.offer.checkin && card.offer.checkout) ? timeElement.textContent = `Заезд после ${card.offer.checkin}, выезд до ${card.offer.checkout}`: timeElement.classList.add('hidden');
+  card.author.avatar ? avatarElement.src = card.author.avatar : avatarElement.classList.add('hidden');
 
   if (card.offer.photos) {
     const photoItemAd = adElement.querySelector('.popup__photo').cloneNode(true);
@@ -40,7 +40,7 @@ const createCard = (card) => {
     });
     adElement.appendChild(photoItemConteiner);
   } else {
-    photos.classList.add('hidden');
+    photosElement.classList.add('hidden');
   }
 
   if (card.offer.features) {
@@ -54,7 +54,7 @@ const createCard = (card) => {
       featuresContainer.appendChild(featuresListItem);
     });
   } else {
-    featureList.classList.add('hidden');
+    featureListElement.classList.add('hidden');
   }
   return adElement;
 };

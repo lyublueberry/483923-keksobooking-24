@@ -14,10 +14,7 @@ import {
   setAddress
 } from './forms.js';
 
-import {
-  debounce
-} from './utils/debounce.js';
-
+import {filtersMap} from './filter.js';
 
 const ATTRIBUTION = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
 const TYLE_LAYER = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
@@ -31,12 +28,8 @@ const URL_MULTIPLE_MARKER = './img/pin.svg';
 const FIX_NUMBER = 5;
 const MARKER_AMOUNT = 10;
 const SHOW_ALERT_TIME = 5000;
-const inputAddress = document.querySelector('#address');
-const filtersForm = document.querySelector('.map__filters');
-const housingGuests = filtersForm.querySelector('#housing-guests');
-const housingType = filtersForm.querySelector('#housing-type');
-const housingRoom = filtersForm.querySelector('#housing-rooms');
-const housingPrice = filtersForm.querySelector('#housing-price');
+const inputAddressElement = document.querySelector('#address');
+
 
 //главная красная метка
 const MAIN_MARKER_ICON = {
@@ -72,7 +65,7 @@ mainPinMarker.addTo(map);
 //двигаем по карте и получаем координаты
 mainPinMarker.on('moveend', (evt) => {
   const {lat,lng} = evt.target.getLatLng();
-  inputAddress.value = `${lat.toFixed(FIX_NUMBER)}, ${lng.toFixed(FIX_NUMBER)}`;
+  inputAddressElement.value = `${lat.toFixed(FIX_NUMBER)}, ${lng.toFixed(FIX_NUMBER)}`;
 });
 
 L.tileLayer(TYLE_LAYER, {
@@ -105,45 +98,6 @@ const showAlert = (message) => {
   }, SHOW_ALERT_TIME);
 };
 
-//фильтруем
-const checkFeatures = (card) => {
-  const selectedFeatures = filtersForm.querySelectorAll('input[name=features]:checked');
-  const selectedFeaturesValues = Array.from(selectedFeatures).map((cb) => cb.value).sort();
-  return !selectedFeaturesValues.length || !!card.offer.features && selectedFeaturesValues.every((item) => card.offer.features.includes(item));
-};
-
-const checkType = (card) => {
-  const selectedHousingTypeValue = housingType.value;
-  return selectedHousingTypeValue === 'any' || card.offer.type === selectedHousingTypeValue || !card.offer.type;
-};
-
-const checkPrice = (card) => {
-  const selectedHousingPriceValue = housingPrice.value;
-  return ((selectedHousingPriceValue === 'middle' && (card.offer.price <= 50000 ||
-      (card.offer.price >= 10000))) ||
-    (selectedHousingPriceValue === 'low' && card.offer.price <= 10000) ||
-    (selectedHousingPriceValue === 'high' && card.offer.price >= 50000) ||
-    selectedHousingPriceValue === 'any') || !card.offer.price;
-};
-
-const checkRoom = (card) => {
-  const selectedHousingRoomValue = housingRoom.value;
-  return selectedHousingRoomValue === 'any' || String(card.offer.rooms) === selectedHousingRoomValue || !card.offer.rooms;
-};
-
-const checkGuests = (card) => {
-  const selectedHousingGuestsValue = housingGuests.value;
-  return selectedHousingGuestsValue === 'any' || String(card.offer.guests) === selectedHousingGuestsValue || !card.offer.guests;
-};
-
-/*фильтр массива, для каждого элемента вызываются функции, в каждую передается текущий элемент*/
-
-const filtersMap = (cards) => {
-  filtersForm.addEventListener('change', debounce(() => {
-    createMultipleMarker(cards.filter((card) => checkFeatures(card) && checkType(card) && checkRoom(card) && checkGuests(card) && checkPrice(card)).slice(0, MARKER_AMOUNT));
-  }));
-};
-
 const addCardsInMarker = () => {
   setAddress(MainMarker.lat, MainMarker.lng);
   getData(
@@ -163,5 +117,5 @@ const resetMap = () => {
 export {
   addCardsInMarker,
   resetMap,
-  MainMarker
+  MainMarker, MARKER_AMOUNT, createMultipleMarker
 };

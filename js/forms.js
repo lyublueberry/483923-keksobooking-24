@@ -7,21 +7,23 @@ import {
   MainMarker
 } from './map.js';
 
-const priceAdInput = document.querySelector('#price');
-const titleAdInput = document.querySelector('#title');
-const capacitySelect = document.querySelector('#capacity');
-const selectRoomNumber = document.querySelector('#room_number');
-const selectTypeHousing = document.querySelector('#type');
-const selectTimeIn = document.querySelector('#timein');
-const selectTimeOut = document.querySelector('#timeout');
-const cardForm = document.querySelector('.ad-form');
-const inputAddress = document.querySelector('#address');
+const priceAdInputElement = document.querySelector('#price');
+const titleAdInputElement = document.querySelector('#title');
+const capacitySelectElement = document.querySelector('#capacity');
+const selectRoomNumberElement = document.querySelector('#room_number');
+const selectTypeHousingElement = document.querySelector('#type');
+const selectTimeInElement = document.querySelector('#timein');
+const selectTimeOutElement = document.querySelector('#timeout');
+const cardFormElement = document.querySelector('.ad-form');
+const inputAddressElement = document.querySelector('#address');
 const errorMessage = document.querySelector('#error').content;
 const successMessage = document.querySelector('#success').content;
-const photoUser = document.querySelector('.setup-user-pic');
-const photoHousing = document.querySelector('.setup-housing-pic');
-const btnResetForm = document.querySelector('.ad-form__reset');
-const filtersForm = document.querySelector('.map__filters');
+const photoUserElement = document.querySelector('.setup-user-pic');
+const photoHousingElement = document.querySelector('.setup-housing-pic');
+const btnResetFormElement = document.querySelector('.ad-form__reset');
+const filtersFormElement = document.querySelector('.map__filters');
+const MAX_PRICE = 1000000;
+const NAME_KEY = 'Escape';
 
 
 const PriceHousing = {
@@ -33,76 +35,76 @@ const PriceHousing = {
 
 //первоначальный адрес
 const setAddress = (lat, lng) => {
-  inputAddress.value = `${lat}, ${lng}`;
+  inputAddressElement.value = `${lat}, ${lng}`;
 };
 
 //устанавливаем начальные значения
-const startupForm = () => {
+const clearForm = () => {
   resetMap();
-  filtersForm.reset();
-  cardForm.reset();
-  photoUser.src = './img/muffin-grey.svg';
-  photoHousing.src = './img/muffin-grey.svg';
+  filtersFormElement.reset();
+  cardFormElement.reset();
+  photoUserElement.src = './img/muffin-grey.svg';
+  photoHousingElement.src = './img/muffin-grey.svg';
   setAddress(MainMarker.lat, MainMarker.lng);
 };
 
 //убираем окно и сохраняем заполненность формы
-const savedFormState = (evt) => {
-  const successError = document.querySelector('.error');
+const saveFormState = (evt) => {
+  const successErrorElement = document.querySelector('.error');
   evt.preventDefault();
-  successError.remove();
+  successErrorElement.remove();
 };
 
 //кликнули на кнопку ОШИБКА
-const popupErrorBtnClickHandler = (evt) => {
+const clickPopupErrorBtnHandler = (evt) => {
   if (evt.type === 'click') {
-    savedFormState();
+    saveFormState();
   }
-  document.querySelector('.error__button').removeEventListener('click', popupErrorBtnClickHandler);
+  document.querySelector('.error__button').removeEventListener('click', clickPopupErrorBtnHandler);
 };
 
 //кликнули в произвол обл ОШИБКА
-const popupErrorMouseClickHandler = (evt) => {
+const clickPopupErrorMouseHandler = (evt) => {
   if (evt.type === 'click') {
     document.querySelector('.success').remove();
-    savedFormState();
+    saveFormState();
   }
-  document.removeEventListener('click', popupErrorMouseClickHandler);
+  document.removeEventListener('click', clickPopupErrorMouseHandler);
 };
 
 //нажали кнопу esc ОШИБКА
-const popupErrorKeydownHandler = (evt) => {
-  if (evt.key === 'Escape') {
+const clickPopupErrorKeydownHandler = (evt) => {
+  if (evt.key === NAME_KEY) {
     document.querySelector('.success').remove();
-    savedFormState();
+    saveFormState();
   }
-  document.removeEventListener('keydown', popupErrorKeydownHandler);
+  document.removeEventListener('keydown', clickPopupErrorKeydownHandler);
 };
 
 //нажали клавишу esc УСПЕХ
-const popupSuccessKeydownHandler = (evt) => {
-  if (evt.key === 'Escape') {
+const clickPopupSuccessKeydownHandler = (evt) => {
+  if (evt.key === NAME_KEY) {
     document.querySelector('.success').remove();
-    startupForm();
+    clearForm();
   }
-  document.removeEventListener('keydown', popupSuccessKeydownHandler);
+  document.removeEventListener('keydown', clickPopupSuccessKeydownHandler);
 };
 
 //кликнули в произвол обл мышью УСПЕХ
-const popupSuccessClickHandler = (evt) => {
+const clickPopupSuccessHandler = (evt) => {
   document.querySelector('.success').remove();
   if (evt.type === 'click') {
-    startupForm();
+    clearForm();
   }
-  document.removeEventListener('click', popupSuccessClickHandler);
+  document.removeEventListener('click', clickPopupSuccessHandler);
 };
 
 //показали сообщение об успехе
 const showSuccessMessage = () => {
   const successModal = successMessage.cloneNode(true);
   document.body.appendChild(successModal);
-  document.addEventListener('keydown', popupSuccessKeydownHandler); //esc
-  document.addEventListener('click', popupSuccessClickHandler); //произвол обл
+  document.addEventListener('keydown', clickPopupSuccessKeydownHandler); //esc
+  document.addEventListener('click', clickPopupSuccessHandler); //произвол обл
 };
 
 //показали сообщение об ошибке
@@ -110,52 +112,52 @@ const showErrorMessage = () => {
   const errorModal = errorMessage.cloneNode(true);
   const btnError = errorModal.querySelector('.error__button');
   document.body.appendChild(errorModal);
-  document.addEventListener('click', popupErrorMouseClickHandler); //произвол обл
-  btnError.addEventListener('click', popupErrorBtnClickHandler); //по кнопке
-  document.addEventListener('keydown', popupErrorKeydownHandler); //esc
+  document.addEventListener('click', clickPopupErrorMouseHandler); //произвол обл
+  btnError.addEventListener('click', clickPopupErrorBtnHandler); //по кнопке
+  document.addEventListener('keydown', clickPopupErrorKeydownHandler); //esc
 };
 
 //валидация заголовка объявления
-titleAdInput.addEventListener('invalid', () => {
-  if (titleAdInput.validity.tooShort) {
-    titleAdInput.setCustomValidity('Минимальная длина заголовка объявления 30 символов');
-  } else if (titleAdInput.validity.tooLong) {
-    titleAdInput.setCustomValidity('Максимальная длина заголовка объявления 100 символов');
-  } else if (titleAdInput.validity.valueMissing) {
-    titleAdInput.setCustomValidity('Обязательное текстовое поле');
+titleAdInputElement.addEventListener('invalid', () => {
+  if (titleAdInputElement.validity.tooShort) {
+    titleAdInputElement.setCustomValidity('Минимальная длина заголовка объявления 30 символов');
+  } else if (titleAdInputElement.validity.tooLong) {
+    titleAdInputElement.setCustomValidity('Максимальная длина заголовка объявления 100 символов');
+  } else if (titleAdInputElement.validity.valueMissing) {
+    titleAdInputElement.setCustomValidity('Обязательное текстовое поле');
   } else {
-    titleAdInput.setCustomValidity('');
+    titleAdInputElement.setCustomValidity('');
   }
 });
 
 //валидация цены
-priceAdInput.addEventListener('invalid', () => {
-  if (priceAdInput.value >= 1000000) {
-    priceAdInput.setCustomValidity('Максимальное значение — 1 000 000');
+priceAdInputElement.addEventListener('invalid', () => {
+  if (priceAdInputElement.value >= MAX_PRICE) {
+    priceAdInputElement.setCustomValidity('Максимальное значение — 1 000 000');
   } else {
-    priceAdInput.setCustomValidity('');
+    priceAdInputElement.setCustomValidity('');
   }
 });
 
 //соотношение кол-во комнат/мест
-capacitySelect.addEventListener('change', function () {
+capacitySelectElement.addEventListener('change', function () {
   const valueOptionCapacity = this.value;
-  if (valueOptionCapacity > selectRoomNumber.value) {
-    capacitySelect.setCustomValidity('Данное значение неверно');
+  if (valueOptionCapacity > selectRoomNumberElement.value) {
+    capacitySelectElement.setCustomValidity('Данное значение неверно');
   } else {
-    capacitySelect.setCustomValidity('');
+    capacitySelectElement.setCustomValidity('');
   }
 });
 
 //соотношение жилья/цена
-selectTypeHousing.addEventListener('change', function () {
+selectTypeHousingElement.addEventListener('change', function () {
   const valueTypeHousing = this.value;
-  priceAdInput.placeholder = PriceHousing[valueTypeHousing];
-  priceAdInput.min = PriceHousing[valueTypeHousing];
+  priceAdInputElement.placeholder = PriceHousing[valueTypeHousing];
+  priceAdInputElement.min = PriceHousing[valueTypeHousing];
 });
 
 //отправка формы
-cardForm.addEventListener('submit', (evt) => {
+cardFormElement.addEventListener('submit', (evt) => {
   evt.preventDefault();
   sendData(
     () => showSuccessMessage(),
@@ -165,17 +167,17 @@ cardForm.addEventListener('submit', (evt) => {
 });
 
 //кнопка сброса
-btnResetForm.addEventListener('click', (evt) => {
+btnResetFormElement.addEventListener('click', (evt) => {
   evt.preventDefault();
-  startupForm();
+  clearForm();
 });
 
-selectTimeIn.addEventListener('click', function () {
-  selectTimeOut.value = this.value;
+selectTimeInElement.addEventListener('click', function () {
+  selectTimeOutElement.value = this.value;
 });
 
-selectTimeOut.addEventListener('click', function () {
-  selectTimeIn.value = this.value;
+selectTimeOutElement.addEventListener('click', function () {
+  selectTimeInElement.value = this.value;
 });
 
 export {
